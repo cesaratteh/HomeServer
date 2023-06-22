@@ -1,17 +1,19 @@
 package com.eve.config;
 
-import com.eve.util.Executer;
-import com.eve.util.Logger;
-import org.openqa.selenium.WebDriver;
+import com.eve.handlers.Executor;
+
+import java.util.concurrent.Executors;
 
 public class SystemFactory {
 
-    public static void initialize() {
-        SeleniumConfig seleniumConfig = new SeleniumConfig();
-        WebDriver driver = seleniumConfig.getSeleniumDriver();
-        driver.get("https://www.facebook.com/marketplace/sanfrancisco/vehicles?sortBy=creation_time_descend");
+    private static final boolean HEADLESS_MODE = false;
+    private static final int EXECUTOR_THREAD_POOL_SIZE = 5;
 
-        Executer executer = new Executer();
+    public static void initialize() {
+        Executor executor = new Executor(
+                Executors.newFixedThreadPool(EXECUTOR_THREAD_POOL_SIZE),
+                new SeleniumDriverBuilder(HEADLESS_MODE));
+        executor.start();
 
         Logger.log("Successfully initialized SystemFactory");
     }

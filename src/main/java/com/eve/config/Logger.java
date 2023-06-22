@@ -1,11 +1,11 @@
-package com.eve.util;
+package com.eve.config;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.*;
 
 public class Logger {
-    private static final String LOG_FILE_PATH = "HomeServer.log";
+    private static final String LOG_FILE_PATH = "HomeServer";
 
     private static java.util.logging.Logger logger;
 
