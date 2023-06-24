@@ -1,23 +1,27 @@
 package com.eve.handlers;
 
-import com.eve.config.Logger;
-import com.eve.config.SeleniumDriverBuilder;
+import com.eve.util.Logger;
 
 import java.util.concurrent.ExecutorService;
 
 public class Executor {
 
-    ExecutorService threadPool;
-    SeleniumDriverBuilder seleniumDriverBuilder;
+    private final ExecutorService threadPool;
+    private final Runnable[] runnables;
 
-    public Executor(ExecutorService threadPool, SeleniumDriverBuilder seleniumDriverBuilder) {
+    public Executor(
+            ExecutorService threadPool,
+            Runnable... runnables) {
         this.threadPool = threadPool;
-        this.seleniumDriverBuilder = seleniumDriverBuilder;
+        this.runnables = runnables;
     }
 
     public void start() {
         Logger.log("running handlers");
-        threadPool.execute(new FacebookMarketplaceCarRunnable(seleniumDriverBuilder.newDriver()));
+
+        for (Runnable runnable : runnables) {
+            threadPool.execute(runnable);
+        }
 
         threadPool.shutdown();
         Logger.log("Successfully initialized the executor");

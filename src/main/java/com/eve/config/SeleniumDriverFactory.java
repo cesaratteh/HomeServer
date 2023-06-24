@@ -5,12 +5,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-public class SeleniumDriverBuilder {
+public class SeleniumDriverFactory {
 
+    private static final boolean HEADLESS_MODE = AppConfig.SELENIUM_DRIVER_FACTORY_HEADLESS_MODE;
     private final ChromeOptions options;
-    public SeleniumDriverBuilder(boolean headlessMode) {
+
+    public SeleniumDriverFactory() {
         this.options = new ChromeOptions();
-        if (headlessMode) {
+        if (HEADLESS_MODE) {
             this.options.addArguments("--headless");
         }
 

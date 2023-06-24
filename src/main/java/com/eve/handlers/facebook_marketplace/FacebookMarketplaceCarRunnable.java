@@ -1,6 +1,7 @@
-package com.eve.handlers;
+package com.eve.handlers.facebook_marketplace;
 
-import com.eve.config.Logger;
+import com.eve.notifier.Notifier;
+import com.eve.util.Logger;
 import com.eve.util.PriceUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -28,9 +29,11 @@ public class FacebookMarketplaceCarRunnable implements Runnable {
             "https://www\\.facebook\\.com/marketplace/item/[0-9]+";
 
     private final WebDriver chrome;
+    private final Notifier notifier;
 
-    public FacebookMarketplaceCarRunnable(WebDriver chrome) {
+    public FacebookMarketplaceCarRunnable(WebDriver chrome, Notifier notifier) {
         this.chrome = chrome;
+        this.notifier = notifier;
     }
 
     @Override
