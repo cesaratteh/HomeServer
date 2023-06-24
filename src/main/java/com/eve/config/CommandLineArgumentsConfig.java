@@ -26,7 +26,7 @@ public class CommandLineArgumentsConfig {
 
             Logger.log(this.arguments.toString());
         } catch (ParseException e) {
-            Logger.log(e.getMessage());
+            Logger.error(e.getMessage(), e);
             System.exit(1);
         }
     }

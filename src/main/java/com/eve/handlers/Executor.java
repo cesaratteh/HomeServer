@@ -17,7 +17,7 @@ public class Executor {
     }
 
     public void start() {
-        Logger.log("running handlers");
+        Logger.log("Running handlers");
 
         for (Runnable runnable : runnables) {
             threadPool.execute(runnable);

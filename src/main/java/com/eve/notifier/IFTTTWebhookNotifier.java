@@ -15,7 +15,6 @@ public class IFTTTWebhookNotifier implements Notifier {
     private final String IFTTT_API_KEY = AppConfig.IFTTT_WEBHOOK_NOTIFIER_IFTTT_API_KEY;
 
     private static int makePostRequest(final String url, final String jsonBody) throws IOException {
-        // Create a HttpURLConnection object
         HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
         connection.setRequestMethod("POST");
         connection.setRequestProperty("Content-Type", "application/json");
@@ -37,7 +36,7 @@ public class IFTTTWebhookNotifier implements Notifier {
             int responseCode = makePostRequest("https://maker.ifttt.com/trigger/" + EVENT_NAME + "/with/key/" + IFTTT_API_KEY,
                     "{\"value1\": \"" + title + "\", \"value2\": \"" + body + "\", \"value3\": \"" + url + "\"}");
 
-            System.out.println("IFTTTWebhookNotifier: Sending notification succeeded " +
+            Logger.log("IFTTTWebhookNotifier: Sending notification succeeded " +
                     responseCode);
         } catch (Exception e) {
             Logger.error("IFTTTWebhookNotifier failed to notify ", e);
