@@ -4,7 +4,7 @@
 Compile, then run assembly:single
 
 ## Running the JAR
-java -jar <file>
+java -jar file.jar
 
 ## System requirements
 
