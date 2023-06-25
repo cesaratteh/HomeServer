@@ -1,48 +1,50 @@
-package com.eve.dao;
+package com.eve.dao.database;
 
 import com.eve.config.AppConfig;
 import com.eve.util.Logger;
 
 import java.sql.*;
 
-public class SQLiteDao implements Dao {
+public class SQLiteDB implements DB {
     private static final String DB_FILE = AppConfig.SQLITE_DAO_DB_FILE;
 
-    public SQLiteDao() {
+    private final String tableName;
+
+    public SQLiteDB(String tableName) {
+        this.tableName = tableName;
+
         try (Connection connection = getConnection()) {
             Statement statement = connection.createStatement();
             String createTableQuery =
-                    "CREATE TABLE IF NOT EXISTS snapshots (id TEXT PRIMARY KEY, data TEXT)";
+                    "CREATE TABLE IF NOT EXISTS " + tableName + " (id TEXT PRIMARY KEY, data TEXT)";
             statement.execute(createTableQuery);
 
-            Logger.log("Initialized SQLiteDao successfully");
+            Logger.log("Initialized SQLiteDB successfully");
         } catch (Exception e) {
             Logger.error("DaoImpl constructor failed", e);
         }
     }
 
     @Override
-    public void insert(Snapshot snapshot) {
-        String insertQuery = "INSERT INTO snapshots (id, data) VALUES (?, ?)";
+    public void insert(DataRecord dataRecord) throws SQLException {
+        String insertQuery = "INSERT INTO " + tableName + " (id, data) VALUES (?, ?)";
 
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement =
                      connection.prepareStatement(insertQuery)) {
-            preparedStatement.setString(1, snapshot.id());
-            preparedStatement.setString(2, snapshot.data());
+            preparedStatement.setString(1, dataRecord.id());
+            preparedStatement.setString(2, dataRecord.data());
 
             preparedStatement.executeUpdate();
-            Logger.log("SQLiteDao insert successfully added " + snapshot);
-        } catch (Exception e) {
-            Logger.error("DaoImpl insert failed", e);
+            Logger.log("SQLiteDB insert successfully added " + dataRecord);
         }
     }
 
     @Override
-    public Snapshot get(String id) {
-        Snapshot snapshot = null;
+    public DataRecord get(String id) throws SQLException {
+        DataRecord dataRecord = null;
 
-        String selectQuery = "SELECT * FROM snapshots WHERE id = ?";
+        String selectQuery = "SELECT * FROM " + tableName + " WHERE id = ?";
 
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement =
@@ -55,16 +57,14 @@ public class SQLiteDao implements Dao {
                 String snapshotId = resultSet.getString("id");
                 String data = resultSet.getString("data");
 
-                snapshot = new Snapshot(snapshotId, data);
+                dataRecord = new DataRecord(snapshotId, data);
             }
 
             resultSet.close();
-        } catch (Exception e) {
-            Logger.error("DaoImpl get failed", e);
         }
 
-        Logger.log("SQLiteDao returning " + snapshot);
-        return snapshot;
+        Logger.log("SQLiteDB returning " + dataRecord);
+        return dataRecord;
     }
 
     private static Connection getConnection() throws SQLException {

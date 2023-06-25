@@ -1,7 +1,7 @@
 package com.eve.dao;
 
 public interface Dao {
-    public void insert(Snapshot snapshot);
+    public void put(BizBuySellDao.BizBuySellListing listing);
 
-    public Snapshot get(String id);
+    public BizBuySellDao.BizBuySellListing get(String id);
 }

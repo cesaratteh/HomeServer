@@ -13,6 +13,8 @@ public class SystemFactory {
     private static final int EXECUTOR_THREAD_POOL_SIZE = AppConfig.SYSTEM_FACTORY_EXECUTOR_THREAD_POOL_SIZE;
 
     public static void initialize(String[] args) {
+        JsonMapper.init();
+
         Notifier webhookNotifier =
                 new IFTTTWebhookNotifier();
 

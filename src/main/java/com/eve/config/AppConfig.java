@@ -2,6 +2,7 @@ package com.eve.config;
 
 public class AppConfig {
     public static final String LOGGER_LOG_FILE = "HomeServerLog_";
+    public static final boolean LOGGER_ENABLE_SYSTEM_OUT = false;
 
     public static final Long MAIN_SERVICE_CRASH_RESTART_TIMEOUT_IN_MINUTES = 5L;
 

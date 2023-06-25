@@ -11,6 +11,7 @@ import java.util.logging.SimpleFormatter;
 
 public class Logger {
     private static final String LOG_FILE_PATH = AppConfig.LOGGER_LOG_FILE;
+    private static final boolean ENABLE_SYSTEM_OUT = AppConfig.LOGGER_ENABLE_SYSTEM_OUT;
 
     private static java.util.logging.Logger logger;
 
@@ -31,10 +32,17 @@ public class Logger {
 
     public static void log(String message) {
         logger.info(message);
+        if(ENABLE_SYSTEM_OUT) {
+            System.out.println(message);
+        }
     }
 
     public static void error(String message, Throwable t) {
         logger.log(Level.SEVERE, message, t);
+        if(ENABLE_SYSTEM_OUT) {
+            System.out.println(message);
+            t.printStackTrace();
+        }
     }
 
     private static String getTimestamp() {
