@@ -14,6 +14,8 @@ public class SQLiteDao implements Dao {
             String createTableQuery =
                     "CREATE TABLE IF NOT EXISTS snapshots (id TEXT PRIMARY KEY, data TEXT)";
             statement.execute(createTableQuery);
+
+            Logger.log("Initialized SQLiteDao successfully");
         } catch (Exception e) {
             Logger.error("DaoImpl constructor failed", e);
         }
@@ -30,6 +32,7 @@ public class SQLiteDao implements Dao {
             preparedStatement.setString(2, snapshot.data());
 
             preparedStatement.executeUpdate();
+            Logger.log("SQLiteDao insert successfully added " + snapshot);
         } catch (Exception e) {
             Logger.error("DaoImpl insert failed", e);
         }
@@ -60,6 +63,7 @@ public class SQLiteDao implements Dao {
             Logger.error("DaoImpl get failed", e);
         }
 
+        Logger.log("SQLiteDao returning " + snapshot);
         return snapshot;
     }
 
