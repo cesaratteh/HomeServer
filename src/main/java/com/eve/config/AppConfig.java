@@ -5,6 +5,7 @@ public class AppConfig {
 
     public static final Long MAIN_SERVICE_CRASH_RESTART_TIMEOUT_IN_MINUTES = 5L;
 
+    public static final String SQLITE_DAO_DB_FILE = "database.db";
     public static final boolean SELENIUM_DRIVER_FACTORY_HEADLESS_MODE = false;
     public static final int SYSTEM_FACTORY_EXECUTOR_THREAD_POOL_SIZE = 5;
 
