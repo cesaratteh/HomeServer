@@ -26,6 +26,26 @@ public class SQLiteDB implements DB {
     }
 
     @Override
+    public void update(DataRecord dataRecord) throws SQLException {
+        String updateQuery = "UPDATE " + tableName + " SET data = ? WHERE id = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement =
+                     connection.prepareStatement(updateQuery)) {
+            preparedStatement.setString(1, dataRecord.data());
+            preparedStatement.setString(2, dataRecord.id());
+
+            int rowsUpdated = preparedStatement.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                Logger.log("SQLiteDB update successfully updated " + dataRecord);
+            } else {
+                Logger.log("SQLiteDB update failed, record not found: " + dataRecord);
+            }
+        }
+    }
+
+    @Override
     public void insert(DataRecord dataRecord) throws SQLException {
         String insertQuery = "INSERT INTO " + tableName + " (id, data) VALUES (?, ?)";
 

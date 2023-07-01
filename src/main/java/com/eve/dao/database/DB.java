@@ -5,5 +5,7 @@ import java.sql.SQLException;
 public interface DB {
     public void insert(DataRecord dataRecord) throws SQLException;
 
+    public void update(DataRecord dataRecord) throws SQLException;
+
     public DataRecord get(String id) throws SQLException;
 }

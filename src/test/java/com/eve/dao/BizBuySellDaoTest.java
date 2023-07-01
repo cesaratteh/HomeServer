@@ -12,7 +12,8 @@ public class BizBuySellDaoTest {
     public void test() throws Exception {
         BizBuySellDao.BizBuySellListing listing =
                 new BizBuySellDao.BizBuySellListing(
-                        UUID.randomUUID().toString(),
+//                        UUID.randomUUID().toString(),
+                        "UUID.randomUUID().toString()",
                         "Test",
                         "test",
                         "id",

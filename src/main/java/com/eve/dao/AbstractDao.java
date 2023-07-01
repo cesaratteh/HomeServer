@@ -12,11 +12,12 @@ public class AbstractDao implements Dao {
         this.sqLiteDB = sqLiteDB;
     }
 
+    @Override
     public void put(BizBuySellDao.BizBuySellListing listing) {
-        try {
-            sqLiteDB.insert(listing.toDataRecord());
-        } catch (Exception e) {
-            Logger.error("BizBuySellDao put failed with exception ", e);
+        if(isPresent(listing.id())) {
+            update(listing);
+        } else {
+            insert(listing);
         }
     }
 
@@ -31,6 +32,23 @@ public class AbstractDao implements Dao {
         }
 
         return null;
+    }
+
+    public void update(BizBuySellDao.BizBuySellListing listing) {
+        try {
+            sqLiteDB.update(listing.toDataRecord());
+        } catch (Exception e) {
+            Logger.error("BizBuySellDao put failed with exception ", e);
+        }
+    }
+
+    @Override
+    public void insert(BizBuySellDao.BizBuySellListing listing) {
+        try {
+            sqLiteDB.insert(listing.toDataRecord());
+        } catch (Exception e) {
+            Logger.error("BizBuySellDao put failed with exception ", e);
+        }
     }
 
     public boolean isPresent(String id) {
