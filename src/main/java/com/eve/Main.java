@@ -10,7 +10,7 @@ public class Main {
 
     public static void main(String[] args) {
         rerunIfCrashed(() -> SystemFactory.initialize(args), SERVICE_CRASH_RESTART_TIMEOUT_IN_MINUTES);
-        Logger.log("Service finished running successfully. Shutting down.");
+        Logger.log("Service Initialized successfully");
     }
 
     private static void rerunIfCrashed(Runnable task, long retryTimerInMinutes) {

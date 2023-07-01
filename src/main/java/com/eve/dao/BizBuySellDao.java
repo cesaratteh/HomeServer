@@ -23,7 +23,8 @@ public class BizBuySellDao extends AbstractDao {
             String detailedInformation,
             String broker,
             String url,
-            Date firstSeen) {
+            Date firstSeen,
+            Date lastSeen) {
 
         public DataRecord toDataRecord() throws JsonProcessingException {
                 return new DataRecord(id, JsonMapper.getMapper().writeValueAsString(this));

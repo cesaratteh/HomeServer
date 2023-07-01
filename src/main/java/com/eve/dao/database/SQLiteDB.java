@@ -63,7 +63,7 @@ public class SQLiteDB implements DB {
             resultSet.close();
         }
 
-        Logger.log("SQLiteDB returning " + dataRecord);
+        Logger.log("SQLiteDB returning " + (dataRecord != null? dataRecord.data() : "empty"));
         return dataRecord;
     }
 

@@ -19,6 +19,7 @@ public class BizBuySellDaoTest {
                         "id",
                         "id",
                         "id",
+                        new Date(),
                         new Date()
                 );
 

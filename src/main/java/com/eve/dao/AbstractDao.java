@@ -1,5 +1,6 @@
 package com.eve.dao;
 
+import com.eve.dao.database.DataRecord;
 import com.eve.dao.database.SQLiteDB;
 import com.eve.util.Logger;
 
@@ -21,11 +22,18 @@ public class AbstractDao implements Dao {
 
     public BizBuySellDao.BizBuySellListing get(String id) {
         try {
-            return BizBuySellDao.BizBuySellListing.fromDataRecord(sqLiteDB.get(id));
+            DataRecord dataRecord = sqLiteDB.get(id);
+            if (dataRecord != null) {
+                return BizBuySellDao.BizBuySellListing.fromDataRecord(dataRecord);
+            }
         } catch (Exception e) {
             Logger.error("BizBuySellDao get failed with exception ", e);
         }
 
         return null;
+    }
+
+    public boolean isPresent(String id) {
+        return get(id) != null;
     }
 }
