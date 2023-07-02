@@ -1,7 +1,7 @@
 package com.eve.notifier;
 
 import com.eve.config.AppConfig;
-import com.eve.util.Logger;
+import com.eve.config.Logger;
 
 import java.io.IOException;
 import java.io.OutputStream;

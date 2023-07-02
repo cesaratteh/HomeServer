@@ -1,9 +1,11 @@
 package com.eve.dao.database;
 
 import com.eve.config.AppConfig;
-import com.eve.util.Logger;
+import com.eve.config.Logger;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SQLiteDB implements DB {
     private static final String DB_FILE = AppConfig.SQLITE_DAO_DB_FILE;
@@ -23,6 +25,10 @@ public class SQLiteDB implements DB {
         } catch (Exception e) {
             Logger.error("DaoImpl constructor failed", e);
         }
+    }
+
+    private static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection("jdbc:sqlite:" + DB_FILE);
     }
 
     @Override
@@ -83,11 +89,26 @@ public class SQLiteDB implements DB {
             resultSet.close();
         }
 
-        Logger.log("SQLiteDB returning " + (dataRecord != null? dataRecord.data() : "empty"));
+        Logger.log("SQLiteDB returning " + (dataRecord != null ? dataRecord.data() : "empty"));
         return dataRecord;
     }
 
-    private static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection("jdbc:sqlite:" + DB_FILE);
+    @Override
+    public List<String> getAllIds() throws SQLException {
+        List<String> ids = new ArrayList<>();
+
+        String selectQuery = "SELECT id FROM " + tableName;
+
+        try (Connection connection = getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(selectQuery)) {
+
+            while (resultSet.next()) {
+                String id = resultSet.getString("id");
+                ids.add(id);
+            }
+        }
+
+        return ids;
     }
 }

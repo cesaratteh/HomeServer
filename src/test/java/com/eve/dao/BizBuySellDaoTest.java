@@ -4,6 +4,7 @@ import com.eve.dao.database.SQLiteDB;
 import org.junit.Test;
 
 import java.util.Date;
+import java.util.Optional;
 import java.util.UUID;
 
 public class BizBuySellDaoTest {
@@ -12,8 +13,7 @@ public class BizBuySellDaoTest {
     public void test() throws Exception {
         BizBuySellDao.BizBuySellListing listing =
                 new BizBuySellDao.BizBuySellListing(
-//                        UUID.randomUUID().toString(),
-                        "UUID.randomUUID().toString()",
+                        UUID.randomUUID().toString(),
                         "Test",
                         "test",
                         "id",
@@ -21,7 +21,8 @@ public class BizBuySellDaoTest {
                         "id",
                         "id",
                         new Date(),
-                        new Date()
+                        new Date(),
+                        null
                 );
 
         BizBuySellDao dao = new BizBuySellDao(new SQLiteDB(BizBuySellDao.TABLE_NAME + "testTable_1"));

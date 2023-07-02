@@ -6,7 +6,6 @@ import com.eve.handlers.Executor;
 import com.eve.handlers.biz_buy_sell.BizBuySellRunnable;
 import com.eve.notifier.IFTTTWebhookNotifier;
 import com.eve.notifier.Notifier;
-import com.eve.util.Logger;
 
 import java.util.concurrent.Executors;
 

@@ -1,7 +1,7 @@
 package com.eve.handlers.facebook_marketplace;
 
+import com.eve.config.Logger;
 import com.eve.notifier.Notifier;
-import com.eve.util.Logger;
 import com.eve.util.PriceUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

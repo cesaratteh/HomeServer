@@ -1,6 +1,4 @@
-package com.eve.util;
-
-import com.eve.config.AppConfig;
+package com.eve.config;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -32,14 +30,14 @@ public class Logger {
 
     public static void log(String message) {
         logger.info(message);
-        if(ENABLE_SYSTEM_OUT) {
+        if (ENABLE_SYSTEM_OUT) {
             System.out.println(message);
         }
     }
 
     public static void error(String message, Throwable t) {
         logger.log(Level.SEVERE, message, t);
-        if(ENABLE_SYSTEM_OUT) {
+        if (ENABLE_SYSTEM_OUT) {
             System.out.println(message);
             t.printStackTrace();
         }

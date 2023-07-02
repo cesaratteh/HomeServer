@@ -1,8 +1,11 @@
 package com.eve.dao;
 
+import com.eve.config.Logger;
 import com.eve.dao.database.DataRecord;
 import com.eve.dao.database.SQLiteDB;
-import com.eve.util.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AbstractDao implements Dao {
 
@@ -14,13 +17,14 @@ public class AbstractDao implements Dao {
 
     @Override
     public void put(BizBuySellDao.BizBuySellListing listing) {
-        if(isPresent(listing.id())) {
+        if (isPresent(listing.id())) {
             update(listing);
         } else {
             insert(listing);
         }
     }
 
+    @Override
     public BizBuySellDao.BizBuySellListing get(String id) {
         try {
             DataRecord dataRecord = sqLiteDB.get(id);
@@ -34,6 +38,20 @@ public class AbstractDao implements Dao {
         return null;
     }
 
+    @Override
+    public List<String> getAllIds() {
+        List<String> ids = new ArrayList<>();
+
+        try {
+            ids = sqLiteDB.getAllIds();
+        } catch (Exception e) {
+            Logger.error("BizBuySellDao getAllIds failed with exception ", e);
+        }
+
+        return ids;
+    }
+
+    @Override
     public void update(BizBuySellDao.BizBuySellListing listing) {
         try {
             sqLiteDB.update(listing.toDataRecord());

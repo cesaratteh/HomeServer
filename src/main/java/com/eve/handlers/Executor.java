@@ -1,6 +1,6 @@
 package com.eve.handlers;
 
-import com.eve.util.Logger;
+import com.eve.config.Logger;
 
 import java.util.concurrent.ExecutorService;
 

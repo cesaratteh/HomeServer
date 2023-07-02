@@ -1,6 +1,5 @@
 package com.eve.config;
 
-import com.eve.util.Logger;
 import org.apache.commons.cli.*;
 
 public class CommandLineArgumentsConfig {

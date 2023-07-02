@@ -15,7 +15,7 @@ public class BizBuySellDao extends AbstractDao {
         super(sqLiteDB);
     }
 
-    public record BizBuySellListing (
+    public record BizBuySellListing(
             String id,
             String title,
             String financials,
@@ -24,14 +24,15 @@ public class BizBuySellDao extends AbstractDao {
             String broker,
             String url,
             Date firstSeen,
-            Date lastSeen) {
-
-        public DataRecord toDataRecord() throws JsonProcessingException {
-                return new DataRecord(id, JsonMapper.getMapper().writeValueAsString(this));
-        }
+            Date lastSeen,
+            Date firstSeenSold) {
 
         public static BizBuySellListing fromDataRecord(DataRecord dataRecord) throws JsonProcessingException {
-                return JsonMapper.getMapper().readValue(dataRecord.data(), BizBuySellListing.class);
+            return JsonMapper.getMapper().readValue(dataRecord.data(), BizBuySellListing.class);
+        }
+
+        public DataRecord toDataRecord() throws JsonProcessingException {
+            return new DataRecord(id, JsonMapper.getMapper().writeValueAsString(this));
         }
     }
 }

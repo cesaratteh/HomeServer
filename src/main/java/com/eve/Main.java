@@ -1,8 +1,8 @@
 package com.eve;
 
 import com.eve.config.AppConfig;
+import com.eve.config.Logger;
 import com.eve.config.SystemFactory;
-import com.eve.util.Logger;
 
 public class Main {
 
