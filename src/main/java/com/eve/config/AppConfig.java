@@ -3,6 +3,7 @@ package com.eve.config;
 public class AppConfig {
     public static final boolean LOGGER_ENABLE_SYSTEM_OUT = true;
     public static final String LOGGER_LOG_FILE = "HomeServerLog_";
+    public static final long LOGGER_LOG_FILE_ROTATE_EVERY_X_HOURS = 1L;
 
     public static final String SQLITE_DAO_DB_FILE = "database.db";
 

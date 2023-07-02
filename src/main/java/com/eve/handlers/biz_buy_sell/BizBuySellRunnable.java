@@ -12,6 +12,7 @@ public class BizBuySellRunnable implements Runnable {
     public static final long FETCH_LISTINGS_EVERY_MS = AppConfig.BIZ_BUY_SELL_FETCH_NEW_LISTINGS_EVERY_X_MS;
     public static final long CHECK_LISTINGS_STILL_UP_HOURS = AppConfig.BIZ_BUY_SELL_CHECK_LISTINGS_STILL_UP_EVERY_X_HRS;
     private static long lastUpdateTime = System.currentTimeMillis();
+
     private final NewListingsPuller newListingsPuller;
     private final SoldListingsSweeper soldListingsSweeper;
 
@@ -20,7 +21,7 @@ public class BizBuySellRunnable implements Runnable {
         this.soldListingsSweeper = new SoldListingsSweeper(chrome, dao);
     }
 
-    private static boolean runSoldListingSweeper() {
+    private static boolean shouldRunSoldListingSweeper() {
         long currentTime = System.currentTimeMillis();
         return currentTime - lastUpdateTime >= CHECK_LISTINGS_STILL_UP_HOURS * 60 * 60 * 1000;
     }
@@ -31,7 +32,7 @@ public class BizBuySellRunnable implements Runnable {
             try {
                 Wait.waitThenPerformAction(newListingsPuller::pullLatestListings, FETCH_LISTINGS_EVERY_MS);
 
-                if (runSoldListingSweeper()) {
+                if (shouldRunSoldListingSweeper()) {
                     soldListingsSweeper.sweepAllListingsAndMarkSoldOnes();
                     lastUpdateTime = System.currentTimeMillis();
                 }
