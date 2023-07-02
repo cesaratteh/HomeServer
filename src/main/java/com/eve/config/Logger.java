@@ -9,7 +9,7 @@ import java.util.logging.SimpleFormatter;
 
 public class Logger {
     private static final String LOG_FILE_PATH = AppConfig.LOGGER_LOG_FILE;
-    private static final long LOG_FILE_ROTATE_EVERY_X_HOURS = AppConfig.LOGGER_LOG_FILE_ROTATE_EVERY_X_HOURS;
+    private static final long LOG_FILE_ROTATE_EVERY_X_HOURS = AppConfig.LOGGER_LOG_FILE_ROTATE_EVERY_X_MS;
     private static final boolean ENABLE_SYSTEM_OUT = AppConfig.LOGGER_ENABLE_SYSTEM_OUT;
 
     private static long lastUpdateTime = System.currentTimeMillis();

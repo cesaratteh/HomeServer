@@ -6,14 +6,14 @@ import com.eve.config.SystemFactory;
 
 public class Main {
 
-    private static final long SERVICE_CRASH_RESTART_TIMEOUT_IN_MINUTES = AppConfig.MAIN_SERVICE_CRASH_RESTART_TIMEOUT_IN_MINUTES;
+    private static final long SERVICE_CRASH_RESTART_TIMEOUT_MS = AppConfig.MAIN_SERVICE_CRASH_RESTART_TIMEOUT_MS;
 
     public static void main(String[] args) {
-        rerunIfCrashed(() -> SystemFactory.initialize(args), SERVICE_CRASH_RESTART_TIMEOUT_IN_MINUTES);
+        rerunIfCrashed(() -> SystemFactory.initialize(args), SERVICE_CRASH_RESTART_TIMEOUT_MS);
         Logger.log("Service Initialized successfully");
     }
 
-    private static void rerunIfCrashed(Runnable task, long retryTimerInMinutes) {
+    private static void rerunIfCrashed(Runnable task, long retryTimerMS) {
         while (true) {
             try {
                 task.run();
@@ -22,7 +22,7 @@ public class Main {
                 Logger.error("Service crashed with exceptions ", e);
 
                 try {
-                    Thread.sleep(retryTimerInMinutes * 60 * 1000);
+                    Thread.sleep(retryTimerMS);
                 } catch (InterruptedException ex) {
                     Logger.error("Thread.sleep threw an exception ", e);
                 }

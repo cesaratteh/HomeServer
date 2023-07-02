@@ -10,7 +10,8 @@ import org.openqa.selenium.WebDriver;
 public class BizBuySellRunnable implements Runnable {
 
     public static final long FETCH_LISTINGS_EVERY_MS = AppConfig.BIZ_BUY_SELL_FETCH_NEW_LISTINGS_EVERY_X_MS;
-    public static final long CHECK_LISTINGS_STILL_UP_HOURS = AppConfig.BIZ_BUY_SELL_CHECK_LISTINGS_STILL_UP_EVERY_X_HRS;
+    public static final long CHECK_LISTINGS_STILL_UP_EVERY_X_MS = AppConfig.BIZ_BUY_SELL_CHECK_LISTINGS_STILL_UP_EVERY_X_MS;
+
     private static long lastUpdateTime = System.currentTimeMillis();
 
     private final NewListingsPuller newListingsPuller;
@@ -23,7 +24,7 @@ public class BizBuySellRunnable implements Runnable {
 
     private static boolean shouldRunSoldListingSweeper() {
         long currentTime = System.currentTimeMillis();
-        return currentTime - lastUpdateTime >= CHECK_LISTINGS_STILL_UP_HOURS * 60 * 60 * 1000;
+        return currentTime - lastUpdateTime >= CHECK_LISTINGS_STILL_UP_EVERY_X_MS;
     }
 
     @Override
