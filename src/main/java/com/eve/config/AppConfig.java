@@ -12,6 +12,8 @@ public class AppConfig {
 
     public static final int SYSTEM_FACTORY_EXECUTOR_THREAD_POOL_SIZE = 5;
 
+    public static final String BIZ_BUY_SELL_RUNNABLE_NATIONWIDE_3DAYS_QUERY_URL =
+            "https://www.bizbuysell.com/businesses-for-sale/?q=ZGxhPTM%3D";
     public static final long BIZ_BUY_SELL_FETCH_NEW_LISTINGS_EVERY_X_MS = TimeUnit.SECONDS.toMillis(10);
     public static final long BIZ_BUY_SELL_CHECK_LISTINGS_STILL_UP_EVERY_X_MS = TimeUnit.DAYS.toMillis(1);
 

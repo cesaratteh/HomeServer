@@ -13,25 +13,21 @@ import java.util.regex.Pattern;
 
 public class NewListingsPuller {
 
-    private static final String BIZ_BUY_SELL_WASHINGTON_3D_QUERY_URL =
-            "https://www.bizbuysell.com/washington-established-businesses-for-sale/?q=ZGxhPTM%3D";
-
-    private static final String BIZ_BUY_SELL_NATIONWIDE_3D_QUERY_URL =
-            "https://www.bizbuysell.com/businesses-for-sale/?q=ZGxhPTM%3D";
-
     private static final Pattern BIZ_LISTING_URL_REGEX =
             Pattern.compile("https://www\\.bizbuysell\\.com/Business-Opportunity/([A-Za-z0-9]+(-[A-Za-z0-9]+)+)/[0-9]+/", Pattern.CASE_INSENSITIVE);
 
     private final WebDriver chrome;
     private final BizBuySellDao dao;
+    private final String listingsPageUrl;
 
-    public NewListingsPuller(WebDriver chrome, BizBuySellDao dao) {
+    public NewListingsPuller(WebDriver chrome, BizBuySellDao dao, String listingsPageUrl) {
         this.chrome = chrome;
         this.dao = dao;
+        this.listingsPageUrl = listingsPageUrl;
     }
 
     public void pullLatestListings() {
-        List<String> listingsURLs = getListingsURLs(BIZ_BUY_SELL_NATIONWIDE_3D_QUERY_URL);
+        List<String> listingsURLs = getListingsURLs(listingsPageUrl);
 
         for (String listingUrl : listingsURLs) {
             String listingId = extractListingIdFromURL(listingUrl);

@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 
 public class BizBuySellRunnable implements Runnable {
 
+    public static final String BIZ_BUY_SELL_NATIONWIDE_3D_QUERY_URL = AppConfig.BIZ_BUY_SELL_RUNNABLE_NATIONWIDE_3DAYS_QUERY_URL;
     public static final long FETCH_LISTINGS_EVERY_MS = AppConfig.BIZ_BUY_SELL_FETCH_NEW_LISTINGS_EVERY_X_MS;
     public static final long CHECK_LISTINGS_STILL_UP_EVERY_X_MS = AppConfig.BIZ_BUY_SELL_CHECK_LISTINGS_STILL_UP_EVERY_X_MS;
 
@@ -18,7 +19,7 @@ public class BizBuySellRunnable implements Runnable {
     private final SoldListingsSweeper soldListingsSweeper;
 
     public BizBuySellRunnable(WebDriver chrome, BizBuySellDao dao, Notifier notifier) {
-        this.newListingsPuller = new NewListingsPuller(chrome, dao);
+        this.newListingsPuller = new NewListingsPuller(chrome, dao, BIZ_BUY_SELL_NATIONWIDE_3D_QUERY_URL);
         this.soldListingsSweeper = new SoldListingsSweeper(chrome, dao);
     }
 
