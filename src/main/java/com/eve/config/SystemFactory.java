@@ -41,10 +41,11 @@ public class SystemFactory {
     private static void initShutdownHook(){
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
-                System.out.println("Shutting down ...");
+                LoggerFactory.getLogger(SystemFactory.class).info("Shutting down ...");
             } catch (Exception e) {
                 Thread.currentThread().interrupt();
-                e.printStackTrace();
+                LoggerFactory.getLogger(SystemFactory.class).error("Error caught while executing" +
+                        "shutdown hook", e);
             }
         }));
     }
