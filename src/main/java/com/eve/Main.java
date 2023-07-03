@@ -1,7 +1,7 @@
 package com.eve;
 
 import com.eve.config.AppConfig;
-import com.eve.config.Logger;
+import com.eve.config.LoggerFactory;
 import com.eve.config.SystemFactory;
 
 public class Main {
@@ -10,7 +10,7 @@ public class Main {
 
     public static void main(String[] args) {
         rerunIfCrashed(() -> SystemFactory.initialize(args), SERVICE_CRASH_RESTART_TIMEOUT_MS);
-        Logger.log("Service Initialized successfully");
+        LoggerFactory.getLogger(Main.class).info("Service Initialized successfully");
     }
 
     private static void rerunIfCrashed(Runnable task, long retryTimerMS) {
@@ -19,15 +19,14 @@ public class Main {
                 task.run();
                 break;
             } catch (Throwable e) {
-                Logger.error("Service crashed with exceptions ", e);
+                LoggerFactory.getLogger(Main.class).error("Service crashed with exceptions ", e);
 
                 try {
                     Thread.sleep(retryTimerMS);
                 } catch (InterruptedException ex) {
-                    Logger.error("Thread.sleep threw an exception ", e);
+                    LoggerFactory.getLogger(Main.class).error("Thread.sleep threw an exception ", e);
                 }
             }
         }
     }
-
 }

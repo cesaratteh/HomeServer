@@ -1,6 +1,6 @@
 package com.eve.handlers.facebook_marketplace;
 
-import com.eve.config.Logger;
+import com.eve.config.LoggerFactory;
 import com.eve.notifier.Notifier;
 import com.eve.util.PriceUtil;
 import org.openqa.selenium.By;
@@ -38,11 +38,11 @@ public class FacebookMarketplaceCarRunnable implements Runnable {
 
     @Override
     public void run() {
-        Logger.log("Running FacebookMarketplaceCarRunnable");
+        LoggerFactory.getLogger(this.getClass()).info("Running FacebookMarketplaceCarRunnable");
         chrome.get(MARKETPLACE_QUERY_URL);
 
         List<Car> latest10Cars = getLatest10Cars();
-        Logger.log("Found the following cars: " + latest10Cars);
+        LoggerFactory.getLogger(this.getClass()).info("Found the following cars: " + latest10Cars);
 
         chrome.quit();
     }

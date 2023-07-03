@@ -1,7 +1,7 @@
 package com.eve.dao.database;
 
 import com.eve.config.AppConfig;
-import com.eve.config.Logger;
+import com.eve.config.LoggerFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -21,9 +21,9 @@ public class SQLiteDB implements DB {
                     "CREATE TABLE IF NOT EXISTS " + tableName + " (id TEXT PRIMARY KEY, data TEXT)";
             statement.execute(createTableQuery);
 
-            Logger.log("Initialized SQLiteDB successfully");
+            LoggerFactory.getLogger(this.getClass()).info("Initialized SQLiteDB successfully");
         } catch (Exception e) {
-            Logger.error("DaoImpl constructor failed", e);
+            LoggerFactory.getLogger(this.getClass()).error("DaoImpl constructor failed", e);
         }
     }
 
@@ -44,9 +44,9 @@ public class SQLiteDB implements DB {
             int rowsUpdated = preparedStatement.executeUpdate();
 
             if (rowsUpdated > 0) {
-                Logger.log("SQLiteDB update successfully updated " + dataRecord);
+                LoggerFactory.getLogger(this.getClass()).info("SQLiteDB update successfully updated " + dataRecord);
             } else {
-                Logger.log("SQLiteDB update failed, record not found: " + dataRecord);
+                LoggerFactory.getLogger(this.getClass()).info("SQLiteDB update failed, record not found: " + dataRecord);
             }
         }
     }
@@ -62,7 +62,7 @@ public class SQLiteDB implements DB {
             preparedStatement.setString(2, dataRecord.data());
 
             preparedStatement.executeUpdate();
-            Logger.log("SQLiteDB insert successfully added " + dataRecord);
+            LoggerFactory.getLogger(this.getClass()).info("SQLiteDB insert successfully added " + dataRecord);
         }
     }
 
@@ -89,7 +89,7 @@ public class SQLiteDB implements DB {
             resultSet.close();
         }
 
-        Logger.log("SQLiteDB returning " + (dataRecord != null ? dataRecord.data() : "empty"));
+        LoggerFactory.getLogger(this.getClass()).info("SQLiteDB returning " + (dataRecord != null ? dataRecord.data() : "empty"));
         return dataRecord;
     }
 

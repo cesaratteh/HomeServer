@@ -1,7 +1,7 @@
 package com.eve.notifier;
 
 import com.eve.config.AppConfig;
-import com.eve.config.Logger;
+import com.eve.config.LoggerFactory;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -36,9 +36,9 @@ public class EmailNotifier implements Notifier {
             message.setText(body + " \n " + url);
 
             Transport.send(message);
-            Logger.log("Email sent successfully!");
+            LoggerFactory.getLogger(this.getClass()).info("Email sent successfully!");
         } catch (Exception e) {
-            Logger.error("EmailNotifier failed to notify ", e);
+            LoggerFactory.getLogger(this.getClass()).error("EmailNotifier failed to notify ", e);
         }
     }
 }

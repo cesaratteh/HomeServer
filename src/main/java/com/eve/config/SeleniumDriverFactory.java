@@ -37,7 +37,8 @@ public class SeleniumDriverFactory {
             try {
                 Thread.sleep(DRIVER_DELAY_MILLIS);
             } catch (InterruptedException e) {
-                Logger.error("Interrupted while delaying WebDriver get ", e);
+                LoggerFactory.getLogger(this.getClass())
+                        .error("Interrupted while delaying WebDriver get ", e);
             }
         }
     }

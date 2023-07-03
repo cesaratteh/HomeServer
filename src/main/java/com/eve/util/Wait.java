@@ -1,6 +1,6 @@
 package com.eve.util;
 
-import com.eve.config.Logger;
+import com.eve.config.LoggerFactory;
 
 public class Wait {
     public static void performActionThenWait(Runnable action, long millis) {
@@ -8,7 +8,7 @@ public class Wait {
             action.run();
             Thread.sleep(millis);
         } catch (InterruptedException e) {
-            Logger.error("Interrupted while performing action", e);
+            LoggerFactory.getLogger(Wait.class).error("Interrupted while performing action", e);
         }
     }
 
@@ -17,7 +17,7 @@ public class Wait {
             Thread.sleep(millis);
             action.run();
         } catch (InterruptedException e) {
-            Logger.error("Interrupted while performing action", e);
+            LoggerFactory.getLogger(Wait.class).error("Interrupted while performing action", e);
         }
     }
 }

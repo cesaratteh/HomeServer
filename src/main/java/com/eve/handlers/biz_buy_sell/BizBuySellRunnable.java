@@ -1,7 +1,7 @@
 package com.eve.handlers.biz_buy_sell;
 
 import com.eve.config.AppConfig;
-import com.eve.config.Logger;
+import com.eve.config.LoggerFactory;
 import com.eve.dao.BizBuySellDao;
 import com.eve.notifier.Notifier;
 import com.eve.util.Wait;
@@ -38,7 +38,7 @@ public class BizBuySellRunnable implements Runnable {
                     lastUpdateTime = System.currentTimeMillis();
                 }
             } catch (Exception e) {
-                Logger.error("BizBuySell handler crashed ", e);
+                LoggerFactory.getLogger(this.getClass()).error("BizBuySell handler crashed ", e);
             }
         }
     }

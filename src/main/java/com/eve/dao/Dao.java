@@ -13,6 +13,5 @@ public interface Dao {
 
     public List<String> getAllIds();
 
-
     public boolean isPresent(String id);
 }

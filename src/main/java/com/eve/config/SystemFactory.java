@@ -14,6 +14,7 @@ public class SystemFactory {
     private static final int EXECUTOR_THREAD_POOL_SIZE = AppConfig.SYSTEM_FACTORY_EXECUTOR_THREAD_POOL_SIZE;
 
     public static void initialize(String[] args) {
+        initShutdownHook();
         JsonMapper.init();
 
         Notifier webhookNotifier =
@@ -32,6 +33,18 @@ public class SystemFactory {
                         webhookNotifier));
         executor.start();
 
-        Logger.log("Successfully initialized SystemFactory");
+        LoggerFactory.getLogger(SystemFactory.class).info("Successfully initialized SystemFactory");
+    }
+
+
+    private static void initShutdownHook(){
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            try {
+                System.out.println("Shutting down ...");
+            } catch (Exception e) {
+                Thread.currentThread().interrupt();
+                e.printStackTrace();
+            }
+        }));
     }
 }

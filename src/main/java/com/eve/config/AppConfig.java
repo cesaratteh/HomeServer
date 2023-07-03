@@ -3,10 +3,6 @@ package com.eve.config;
 import java.util.concurrent.TimeUnit;
 
 public class AppConfig {
-    public static final boolean LOGGER_ENABLE_SYSTEM_OUT = true;
-    public static final String LOGGER_LOG_FILE = "HomeServerLog_";
-    public static final long LOGGER_LOG_FILE_ROTATE_EVERY_X_MS = TimeUnit.HOURS.toMillis(1);
-
     public static final String SQLITE_DAO_DB_FILE = "database.db";
 
     public static final Long MAIN_SERVICE_CRASH_RESTART_TIMEOUT_MS = TimeUnit.MINUTES.toMillis(5);

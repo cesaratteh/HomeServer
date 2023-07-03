@@ -1,6 +1,6 @@
 package com.eve.dao;
 
-import com.eve.config.Logger;
+import com.eve.config.LoggerFactory;
 import com.eve.dao.database.DataRecord;
 import com.eve.dao.database.SQLiteDB;
 
@@ -32,7 +32,7 @@ public class AbstractDao implements Dao {
                 return BizBuySellDao.BizBuySellListing.fromDataRecord(dataRecord);
             }
         } catch (Exception e) {
-            Logger.error("BizBuySellDao get failed with exception ", e);
+            LoggerFactory.getLogger(this.getClass()).error("BizBuySellDao get failed with exception ", e);
         }
 
         return null;
@@ -45,7 +45,7 @@ public class AbstractDao implements Dao {
         try {
             ids = sqLiteDB.getAllIds();
         } catch (Exception e) {
-            Logger.error("BizBuySellDao getAllIds failed with exception ", e);
+            LoggerFactory.getLogger(this.getClass()).error("BizBuySellDao getAllIds failed with exception ", e);
         }
 
         return ids;
@@ -56,7 +56,7 @@ public class AbstractDao implements Dao {
         try {
             sqLiteDB.update(listing.toDataRecord());
         } catch (Exception e) {
-            Logger.error("BizBuySellDao put failed with exception ", e);
+            LoggerFactory.getLogger(this.getClass()).error("BizBuySellDao put failed with exception ", e);
         }
     }
 
@@ -65,7 +65,7 @@ public class AbstractDao implements Dao {
         try {
             sqLiteDB.insert(listing.toDataRecord());
         } catch (Exception e) {
-            Logger.error("BizBuySellDao put failed with exception ", e);
+            LoggerFactory.getLogger(this.getClass()).error("BizBuySellDao put failed with exception ", e);
         }
     }
 

@@ -1,6 +1,7 @@
 package com.eve.handlers;
 
-import com.eve.config.Logger;
+
+import com.eve.config.LoggerFactory;
 
 import java.util.concurrent.ExecutorService;
 
@@ -17,13 +18,13 @@ public class Executor {
     }
 
     public void start() {
-        Logger.log("Running handlers");
+        LoggerFactory.getLogger(this.getClass()).info("Running handlers");
 
         for (Runnable runnable : runnables) {
             threadPool.execute(runnable);
         }
 
         threadPool.shutdown();
-        Logger.log("Successfully initialized the executor");
+        LoggerFactory.getLogger(this.getClass()).info("Successfully initialized the executor");
     }
 }

@@ -23,9 +23,9 @@ public class CommandLineArgumentsConfig {
                     cmd.getOptionValue("toEmail")
             );
 
-            Logger.log(this.arguments.toString());
+            LoggerFactory.getLogger(this.getClass()).info(this.arguments.toString());
         } catch (ParseException e) {
-            Logger.error(e.getMessage(), e);
+            LoggerFactory.getLogger(this.getClass()).error(e.getMessage(), e);
             System.exit(1);
         }
     }

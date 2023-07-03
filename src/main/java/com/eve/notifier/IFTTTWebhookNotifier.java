@@ -1,7 +1,7 @@
 package com.eve.notifier;
 
 import com.eve.config.AppConfig;
-import com.eve.config.Logger;
+import com.eve.config.LoggerFactory;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -36,10 +36,10 @@ public class IFTTTWebhookNotifier implements Notifier {
             int responseCode = makePostRequest("https://maker.ifttt.com/trigger/" + EVENT_NAME + "/with/key/" + IFTTT_API_KEY,
                     "{\"value1\": \"" + title + "\", \"value2\": \"" + body + "\", \"value3\": \"" + url + "\"}");
 
-            Logger.log("IFTTTWebhookNotifier: Sending notification succeeded " +
+            LoggerFactory.getLogger(this.getClass()).info("IFTTTWebhookNotifier: Sending notification succeeded " +
                     responseCode);
         } catch (Exception e) {
-            Logger.error("IFTTTWebhookNotifier failed to notify ", e);
+            LoggerFactory.getLogger(this.getClass()).error("IFTTTWebhookNotifier failed to notify ", e);
         }
     }
 }
