@@ -15,6 +15,7 @@ public class BizBuySellRunnable implements Runnable {
 
     private static long lastUpdateTime = System.currentTimeMillis();
 
+    private static boolean isFirstRun = true;
     private final NewListingsPuller newListingsPuller;
     private final SoldListingsSweeper soldListingsSweeper;
 
@@ -24,6 +25,11 @@ public class BizBuySellRunnable implements Runnable {
     }
 
     private static boolean shouldRunSoldListingSweeper() {
+        if (isFirstRun) {
+            isFirstRun = false;
+            return true;
+        }
+
         long currentTime = System.currentTimeMillis();
         return currentTime - lastUpdateTime >= CHECK_LISTINGS_STILL_UP_EVERY_X_MS;
     }
