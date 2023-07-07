@@ -41,20 +41,20 @@ public class BizBuySellRunnable implements Runnable {
     public void run() {
         LoggerFactory.getLogger(this.getClass()).info("Running BizBuySellRunnable");
 
-        while (true) {
-            try {
+        try {
+            while (true) {
                 Wait.waitThenPerformAction(newListingsPuller::pullLatestListings, FETCH_LISTINGS_EVERY_MS);
 
                 if (shouldRunSoldListingSweeper()) {
                     soldListingsSweeper.sweepAllListingsAndMarkSoldOnes();
                     lastUpdateTime = System.currentTimeMillis();
                 }
-            } catch (Exception e) {
-                LoggerFactory.getLogger(this.getClass()).error("BizBuySell handler crashed ", e);
-                throw e;
-            } finally {
-                chrome.quit();
             }
+        } catch (Exception e) {
+            LoggerFactory.getLogger(this.getClass()).error("BizBuySell handler crashed ", e);
+            throw e;
+        } finally {
+            chrome.quit();
         }
     }
 }
