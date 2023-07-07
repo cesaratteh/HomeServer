@@ -2,6 +2,7 @@ package com.eve.handlers.biz_buy_sell;
 
 import com.eve.config.LoggerFactory;
 import com.eve.dao.BizBuySellDao;
+import com.eve.dao.BizBuySellListing;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -42,46 +43,46 @@ public class SoldListingsSweeper {
     }
 
     private boolean isSoldInDao(String id) {
-        return dao.get(id).firstSeenSold() != null;
+        return dao.get(id).getFirstSeenSold() != null;
     }
 
     private boolean isSoldOnline(String id) {
-        chrome.get(dao.get(id).url());
+        chrome.get(dao.get(id).getUrl());
         List<WebElement> elements = chrome.findElements(By.tagName("h1"));
 
         return elements.stream().anyMatch(e -> e.getText().contains("The page you requested could not be found"));
     }
 
     private void markSold(String id) {
-        BizBuySellDao.BizBuySellListing listing = dao.get(id);
-        BizBuySellDao.BizBuySellListing updatedListing = new BizBuySellDao.BizBuySellListing(
-                listing.id(),
-                listing.title(),
-                listing.financials(),
-                listing.description(),
-                listing.detailedInformation(),
-                listing.broker(),
-                listing.url(),
-                listing.firstSeen(),
-                listing.lastSeen(),
+        BizBuySellListing listing = dao.get(id);
+        BizBuySellListing updatedListing = new BizBuySellListing(
+                listing.getId(),
+                listing.getTitle(),
+                listing.getFinancials(),
+                listing.getDescription(),
+                listing.getDetailedInformation(),
+                listing.getBroker(),
+                listing.getUrl(),
+                listing.getFirstSeen(),
+                listing.getLastSeen(),
                 new Date());
 
         dao.put(updatedListing);
     }
 
     private void updateLastSeenDate(String listingId) {
-        BizBuySellDao.BizBuySellListing listing = dao.get(listingId);
-        BizBuySellDao.BizBuySellListing updatedListing = new BizBuySellDao.BizBuySellListing(
-                listing.id(),
-                listing.title(),
-                listing.financials(),
-                listing.description(),
-                listing.detailedInformation(),
-                listing.broker(),
-                listing.url(),
-                listing.firstSeen(),
+        BizBuySellListing listing = dao.get(listingId);
+        BizBuySellListing updatedListing = new BizBuySellListing(
+                listing.getId(),
+                listing.getTitle(),
+                listing.getFinancials(),
+                listing.getDescription(),
+                listing.getDetailedInformation(),
+                listing.getBroker(),
+                listing.getUrl(),
+                listing.getFirstSeen(),
                 new Date(),
-                listing.firstSeenSold());
+                listing.getFirstSeenSold());
 
         dao.put(updatedListing);
     }

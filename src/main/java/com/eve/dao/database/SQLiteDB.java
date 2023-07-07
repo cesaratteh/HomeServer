@@ -2,6 +2,7 @@ package com.eve.dao.database;
 
 import com.eve.config.AppConfig;
 import com.eve.config.LoggerFactory;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -32,14 +33,14 @@ public class SQLiteDB implements DB {
     }
 
     @Override
-    public void update(DataRecord dataRecord) throws SQLException {
+    public void update(DataRecord dataRecord) throws SQLException, JsonProcessingException {
         String updateQuery = "UPDATE " + tableName + " SET data = ? WHERE id = ?";
 
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement =
                      connection.prepareStatement(updateQuery)) {
             preparedStatement.setString(1, dataRecord.data());
-            preparedStatement.setString(2, dataRecord.id());
+            preparedStatement.setString(2, dataRecord.getId());
 
             int rowsUpdated = preparedStatement.executeUpdate();
 
@@ -52,13 +53,13 @@ public class SQLiteDB implements DB {
     }
 
     @Override
-    public void insert(DataRecord dataRecord) throws SQLException {
+    public void insert(DataRecord dataRecord) throws SQLException, JsonProcessingException {
         String insertQuery = "INSERT INTO " + tableName + " (id, data) VALUES (?, ?)";
 
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement =
                      connection.prepareStatement(insertQuery)) {
-            preparedStatement.setString(1, dataRecord.id());
+            preparedStatement.setString(1, dataRecord.getId());
             preparedStatement.setString(2, dataRecord.data());
 
             preparedStatement.executeUpdate();
@@ -67,7 +68,7 @@ public class SQLiteDB implements DB {
     }
 
     @Override
-    public DataRecord get(String id) throws SQLException {
+    public DataRecord get(String id) throws SQLException, JsonProcessingException {
         DataRecord dataRecord = null;
 
         String selectQuery = "SELECT * FROM " + tableName + " WHERE id = ?";

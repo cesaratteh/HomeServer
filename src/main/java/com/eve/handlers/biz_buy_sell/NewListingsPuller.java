@@ -1,6 +1,7 @@
 package com.eve.handlers.biz_buy_sell;
 
 import com.eve.dao.BizBuySellDao;
+import com.eve.dao.BizBuySellListing;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -41,18 +42,18 @@ public class NewListingsPuller {
     }
 
     private void updateLastSeenDate(String listingId) {
-        BizBuySellDao.BizBuySellListing listing = dao.get(listingId);
-        BizBuySellDao.BizBuySellListing updatedListing = new BizBuySellDao.BizBuySellListing(
-                listing.id(),
-                listing.title(),
-                listing.financials(),
-                listing.description(),
-                listing.detailedInformation(),
-                listing.broker(),
-                listing.url(),
-                listing.firstSeen(),
+        BizBuySellListing listing = dao.get(listingId);
+        BizBuySellListing updatedListing = new BizBuySellListing(
+                listing.getId(),
+                listing.getTitle(),
+                listing.getFinancials(),
+                listing.getDescription(),
+                listing.getDetailedInformation(),
+                listing.getBroker(),
+                listing.getUrl(),
+                listing.getFirstSeen(),
                 new Date(),
-                listing.firstSeenSold());
+                listing.getFirstSeenSold());
 
         dao.put(updatedListing);
     }
@@ -66,7 +67,7 @@ public class NewListingsPuller {
         String detailedInformation = chrome.findElement(By.className("listingProfile_details")).getText();
         String broker = chrome.findElement(By.className("broker")).getText();
 
-        BizBuySellDao.BizBuySellListing listing = new BizBuySellDao.BizBuySellListing(
+        BizBuySellListing listing = new BizBuySellListing(
                 listingId,
                 title,
                 financials,

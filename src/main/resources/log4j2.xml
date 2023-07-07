@@ -12,21 +12,21 @@
                 </pattern>
             </PatternLayout>
             <Policies>
-                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
-                <SizeBasedTriggeringPolicy size="1GB" />
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="1GB"/>
             </Policies>
             <!-- Max 1 file will be created everyday -->
             <DefaultRolloverStrategy max="1">
                 <Delete basePath="logs" maxDepth="10">
                     <!-- Delete all files older than 7 days -->
-                    <IfLastModified age="2d" />
+                    <IfLastModified age="2d"/>
                 </Delete>
             </DefaultRolloverStrategy>
         </RollingFile>
     </Appenders>
     <Loggers>
         <Root level="info" additivity="false">
-            <appender-ref ref="fileLogger" />
+            <appender-ref ref="fileLogger"/>
         </Root>
     </Loggers>
 </Configuration>

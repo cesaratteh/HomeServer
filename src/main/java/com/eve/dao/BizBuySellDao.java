@@ -5,9 +5,7 @@ import com.eve.dao.database.DataRecord;
 import com.eve.dao.database.SQLiteDB;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import java.util.Date;
-
-public class BizBuySellDao extends AbstractDao {
+public class BizBuySellDao extends AbstractDao<BizBuySellListing> {
 
     public final static String TABLE_NAME = "BizBuySell";
 
@@ -15,24 +13,13 @@ public class BizBuySellDao extends AbstractDao {
         super(sqLiteDB);
     }
 
-    public record BizBuySellListing(
-            String id,
-            String title,
-            String financials,
-            String description,
-            String detailedInformation,
-            String broker,
-            String url,
-            Date firstSeen,
-            Date lastSeen,
-            Date firstSeenSold) {
+    @Override
+    public BizBuySellListing fromDataRecord(DataRecord dataRecord) throws JsonProcessingException {
+        return JsonMapper.getMapper().readValue(dataRecord.data(), BizBuySellListing.class);
+    }
 
-        public static BizBuySellListing fromDataRecord(DataRecord dataRecord) throws JsonProcessingException {
-            return JsonMapper.getMapper().readValue(dataRecord.data(), BizBuySellListing.class);
-        }
-
-        public DataRecord toDataRecord() throws JsonProcessingException {
-            return new DataRecord(id, JsonMapper.getMapper().writeValueAsString(this));
-        }
+    @Override
+    public DataRecord toDataRecord(BizBuySellListing listing) throws JsonProcessingException {
+        return new DataRecord(listing.getId(), JsonMapper.getMapper().writeValueAsString(listing));
     }
 }

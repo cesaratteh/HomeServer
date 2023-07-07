@@ -1,15 +1,17 @@
 package com.eve.dao;
 
+import com.eve.dao.database.DataRecord;
+
 import java.util.List;
 
-public interface Dao {
-    public void insert(BizBuySellDao.BizBuySellListing listing);
+public interface Dao<T extends DataRecord> {
+    public void insert(T listing);
 
-    public void put(BizBuySellDao.BizBuySellListing listing);
+    public void put(T listing);
 
-    public void update(BizBuySellDao.BizBuySellListing listing);
+    public void update(T listing);
 
-    public BizBuySellDao.BizBuySellListing get(String id);
+    public T get(String id);
 
     public List<String> getAllIds();
 

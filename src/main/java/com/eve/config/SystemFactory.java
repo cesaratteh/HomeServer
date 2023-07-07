@@ -49,7 +49,7 @@ public class SystemFactory {
         executor.start();
     }
 
-    private static void initShutdownHook(){
+    private static void initShutdownHook() {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
                 LoggerFactory.getLogger(SystemFactory.class).info("Shutting down ...");

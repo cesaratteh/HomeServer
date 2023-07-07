@@ -3,11 +3,12 @@ package com.eve.dao;
 import com.eve.config.LoggerFactory;
 import com.eve.dao.database.DataRecord;
 import com.eve.dao.database.SQLiteDB;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AbstractDao implements Dao {
+public class AbstractDao<T extends DataRecord> implements Dao<T> {
 
     private final SQLiteDB sqLiteDB;
 
@@ -16,8 +17,8 @@ public class AbstractDao implements Dao {
     }
 
     @Override
-    public void put(BizBuySellDao.BizBuySellListing listing) {
-        if (isPresent(listing.id())) {
+    public void put(T listing) {
+        if (isPresent(listing.getId())) {
             update(listing);
         } else {
             insert(listing);
@@ -25,11 +26,11 @@ public class AbstractDao implements Dao {
     }
 
     @Override
-    public BizBuySellDao.BizBuySellListing get(String id) {
+    public T get(String id) {
         try {
             DataRecord dataRecord = sqLiteDB.get(id);
             if (dataRecord != null) {
-                return BizBuySellDao.BizBuySellListing.fromDataRecord(dataRecord);
+                return fromDataRecord(dataRecord);
             }
         } catch (Exception e) {
             LoggerFactory.getLogger(this.getClass()).error("BizBuySellDao get failed with exception ", e);
@@ -52,24 +53,33 @@ public class AbstractDao implements Dao {
     }
 
     @Override
-    public void update(BizBuySellDao.BizBuySellListing listing) {
+    public void update(T listing) {
         try {
-            sqLiteDB.update(listing.toDataRecord());
+            sqLiteDB.update(toDataRecord(listing));
         } catch (Exception e) {
             LoggerFactory.getLogger(this.getClass()).error("BizBuySellDao put failed with exception ", e);
         }
     }
 
     @Override
-    public void insert(BizBuySellDao.BizBuySellListing listing) {
+    public void insert(T listing) {
         try {
-            sqLiteDB.insert(listing.toDataRecord());
+            sqLiteDB.insert(toDataRecord(listing));
         } catch (Exception e) {
             LoggerFactory.getLogger(this.getClass()).error("BizBuySellDao put failed with exception ", e);
         }
     }
 
+    @Override
     public boolean isPresent(String id) {
         return get(id) != null;
+    }
+
+    public T fromDataRecord(DataRecord dataRecord) throws JsonProcessingException {
+        throw new RuntimeException("Method must be overriden");
+    }
+
+    public DataRecord toDataRecord(T object) throws JsonProcessingException {
+        throw new RuntimeException("Method must be overriden");
     }
 }

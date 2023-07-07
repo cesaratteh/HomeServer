@@ -1,4 +1,34 @@
 package com.eve.dao.database;
 
-public record DataRecord(String id, String data) {
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+public class DataRecord {
+    private String id;
+    private String data;
+
+    public String getId() {
+        return id;
+    }
+
+    public String data() throws JsonProcessingException {
+        if (this.data == null) this.data = pullData();
+
+        return this.data;
+    }
+
+    public String pullData() throws JsonProcessingException {
+        throw new RuntimeException("Must be overriden");
+    }
+
+    public DataRecord() {
+    }
+
+    public DataRecord(String id) {
+        this.id = id;
+    }
+
+    public DataRecord(String id, String data) {
+        this.id = id;
+        this.data = data;
+    }
 }
