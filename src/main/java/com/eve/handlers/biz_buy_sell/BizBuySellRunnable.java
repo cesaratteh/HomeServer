@@ -16,10 +16,13 @@ public class BizBuySellRunnable implements Runnable {
     private static long lastUpdateTime = System.currentTimeMillis();
 
     private static boolean isFirstRun = true;
+
+    private final WebDriver chrome;
     private final NewListingsPuller newListingsPuller;
     private final SoldListingsSweeper soldListingsSweeper;
 
     public BizBuySellRunnable(WebDriver chrome, BizBuySellDao dao, Notifier notifier) {
+        this.chrome = chrome;
         this.newListingsPuller = new NewListingsPuller(chrome, dao, BIZ_BUY_SELL_NATIONWIDE_3D_QUERY_URL);
         this.soldListingsSweeper = new SoldListingsSweeper(chrome, dao);
     }
@@ -36,6 +39,8 @@ public class BizBuySellRunnable implements Runnable {
 
     @Override
     public void run() {
+        LoggerFactory.getLogger(this.getClass()).info("Running BizBuySellRunnable");
+
         while (true) {
             try {
                 Wait.waitThenPerformAction(newListingsPuller::pullLatestListings, FETCH_LISTINGS_EVERY_MS);
@@ -46,6 +51,9 @@ public class BizBuySellRunnable implements Runnable {
                 }
             } catch (Exception e) {
                 LoggerFactory.getLogger(this.getClass()).error("BizBuySell handler crashed ", e);
+                throw e;
+            } finally {
+                chrome.quit();
             }
         }
     }
