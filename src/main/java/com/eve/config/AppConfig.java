@@ -5,9 +5,7 @@ import java.util.concurrent.TimeUnit;
 public class AppConfig {
     public static final String SQLITE_DAO_DB_FILE = "database.db";
 
-    public static final Long MAIN_SERVICE_CRASH_RESTART_TIMEOUT_MS = TimeUnit.MINUTES.toMillis(10);
-
-    public static final Long EXECUTOR_POLL_FOR_DEAD_THREADS_AND_RERUN_EVERY_X_MS = TimeUnit.MINUTES.toMillis(5);
+    public static final Long MAIN_SERVICE_CRASH_RESTART_TIMEOUT_MS = TimeUnit.MINUTES.toMillis(5);
 
     public static final boolean SELENIUM_DRIVER_FACTORY_HEADLESS_MODE = false;
     public static final long SELENIUM_DRIVER_DELAY_IN_MILLIS = TimeUnit.SECONDS.toMillis(5);

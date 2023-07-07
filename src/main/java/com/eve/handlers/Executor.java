@@ -1,55 +1,30 @@
 package com.eve.handlers;
 
-import com.eve.config.AppConfig;
-import com.eve.config.LoggerFactory;
-import com.eve.config.RunnableFactory;
-import com.eve.util.Wait;
 
-import java.util.HashMap;
-import java.util.concurrent.*;
+import com.eve.config.LoggerFactory;
+
+import java.util.concurrent.ExecutorService;
 
 public class Executor {
 
-    private final static Long POLL_FOR_DEAD_THREADS_AND_RERUN_EVERY_X_MS =
-            AppConfig.EXECUTOR_POLL_FOR_DEAD_THREADS_AND_RERUN_EVERY_X_MS;
-
     private final ExecutorService threadPool;
-    private final RunnableFactory[] runnableFactories;
-    private final HashMap<RunnableFactory, Future<?>> activeRunnables;
+    private final Runnable[] runnables;
 
     public Executor(
             ExecutorService threadPool,
-            RunnableFactory... runnableFactories) {
+            Runnable... runnables) {
         this.threadPool = threadPool;
-        this.runnableFactories = runnableFactories;
-        this.activeRunnables = new HashMap<>();
+        this.runnables = runnables;
     }
 
     public void start() {
-        LoggerFactory.getLogger(this.getClass()).info("Running runnables");
+        LoggerFactory.getLogger(this.getClass()).info("Running handlers");
 
-        for (RunnableFactory factory : runnableFactories) createRunnableAndRun(factory);
-
-        while (true) {
-            Wait.waitThenPerformAction(
-                    () -> rerunDeadRunnables(activeRunnables),
-                    POLL_FOR_DEAD_THREADS_AND_RERUN_EVERY_X_MS
-            );
+        for (Runnable runnable : runnables) {
+            threadPool.execute(runnable);
         }
-    }
 
-    private void rerunDeadRunnables(HashMap<RunnableFactory, Future<?>> activeRunnables) {
-        activeRunnables.forEach((factory, future) -> {
-            if (future.isDone()) {
-                LoggerFactory.getLogger(Executor.class).error(
-                        "Found a dead runnable, restarting " + factory, RuntimeException::new);
-                createRunnableAndRun(factory);
-            }
-        });
-    }
-
-    private void createRunnableAndRun(RunnableFactory runnableFactory) {
-        Future<?> submit = this.threadPool.submit(runnableFactory.create());
-        activeRunnables.put(runnableFactory, submit);
+        threadPool.shutdown();
+        LoggerFactory.getLogger(this.getClass()).info("Successfully initialized the executor");
     }
 }

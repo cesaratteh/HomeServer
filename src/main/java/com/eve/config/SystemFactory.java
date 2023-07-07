@@ -20,34 +20,23 @@ public class SystemFactory {
 
         Notifier webhookNotifier =
                 new IFTTTWebhookNotifier();
+
         SeleniumDriverFactory seleniumDriverFactory =
                 new SeleniumDriverFactory();
 
-        BizBuySellDao bizBuySellDao =
-                new BizBuySellDao(new SQLiteDB(BizBuySellDao.TABLE_NAME));
-
-        /**
-         * Objects that are created inside the runnable factories
-         * get re-created in case the runnable crashes.
-         *
-         * Objects that are created outside the factory, and
-         * passed to it, are re-used when the thread crashes.
-         */
         Executor executor = new Executor(
                 Executors.newFixedThreadPool(EXECUTOR_THREAD_POOL_SIZE),
-                () -> new BizBuySellRunnable(
-                        seleniumDriverFactory.newDriver(),
-                        bizBuySellDao,
-                        webhookNotifier)
-//                () ->  new FacebookMarketplaceCarRunnable(
-//                            seleniumDriverFactory.newDriver(),
-//                            webhookNotifier)
-        );
-
-        LoggerFactory.getLogger(SystemFactory.class)
-                .info("Successfully initialized SystemFactory, starting executor");
+//                new FacebookMarketplaceCarRunnable(
+//                        seleniumDriverFactory.newDriver(),
+//                        webhookNotifier));
+                new BizBuySellRunnable(seleniumDriverFactory.newDriver(),
+                        new BizBuySellDao(new SQLiteDB(BizBuySellDao.TABLE_NAME)),
+                        webhookNotifier));
         executor.start();
+
+        LoggerFactory.getLogger(SystemFactory.class).info("Successfully initialized SystemFactory");
     }
+
 
     private static void initShutdownHook(){
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
