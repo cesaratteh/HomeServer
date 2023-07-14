@@ -8,6 +8,7 @@ import com.eve.handlers.facebook_marketplace.FacebookMarketplaceCarRunnable;
 import com.eve.notifier.IFTTTWebhookNotifier;
 import com.eve.notifier.Notifier;
 
+import java.io.IOException;
 import java.util.concurrent.Executors;
 
 public class SystemFactory {
@@ -15,44 +16,50 @@ public class SystemFactory {
     private static final int EXECUTOR_THREAD_POOL_SIZE = AppConfig.SYSTEM_FACTORY_EXECUTOR_THREAD_POOL_SIZE;
 
     public static void initialize(String[] args) {
-        initShutdownHook();
-        JsonMapper.init();
+        try {
+            initShutdownHook();
+            PrometheusConfig.init();
+            JsonMapper.init();
 
-        Notifier webhookNotifier =
-                new IFTTTWebhookNotifier();
-        SeleniumDriverFactory seleniumDriverFactory =
-                new SeleniumDriverFactory();
+            Notifier webhookNotifier =
+                    new IFTTTWebhookNotifier();
+            SeleniumDriverFactory seleniumDriverFactory =
+                    new SeleniumDriverFactory();
 
-        BizBuySellDao bizBuySellDao =
-                new BizBuySellDao(new SQLiteDB(BizBuySellDao.TABLE_NAME));
+            BizBuySellDao bizBuySellDao =
+                    new BizBuySellDao(new SQLiteDB(BizBuySellDao.TABLE_NAME));
 
-        /**
-         * Objects that are created inside the runnable factories
-         * get re-created in case the runnable crashes.
-         *
-         * Objects that are created outside the factory, and
-         * passed to it, are re-used when the thread crashes.
-         */
-        Executor executor = new Executor(
-                Executors.newFixedThreadPool(EXECUTOR_THREAD_POOL_SIZE),
-                () -> new BizBuySellRunnable(
-                        seleniumDriverFactory.newDriver(),
-                        bizBuySellDao,
-                        webhookNotifier)
+            /**
+             * Objects that are created inside the runnable factories
+             * get re-created in case the runnable crashes.
+             *
+             * Objects that are created outside the factory, and
+             * passed to it, are re-used when the thread crashes.
+             */
+            Executor executor = new Executor(
+                    Executors.newFixedThreadPool(EXECUTOR_THREAD_POOL_SIZE),
+                    () -> new BizBuySellRunnable(
+                            seleniumDriverFactory.newDriver(),
+                            bizBuySellDao,
+                            webhookNotifier)
 //                () ->  new FacebookMarketplaceCarRunnable(
 //                            seleniumDriverFactory.newDriver(),
 //                            webhookNotifier)
-        );
+            );
 
-        LoggerFactory.getLogger(SystemFactory.class)
-                .info("Successfully initialized SystemFactory, starting executor");
-        executor.start();
+            LoggerFactory.getLogger(SystemFactory.class)
+                    .info("Successfully initialized SystemFactory, starting executor");
+            executor.start();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static void initShutdownHook() {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
                 LoggerFactory.getLogger(SystemFactory.class).info("Shutting down ...");
+                PrometheusConfig.shutdown();
             } catch (Exception e) {
                 Thread.currentThread().interrupt();
                 LoggerFactory.getLogger(SystemFactory.class).error("Error caught while executing" +

@@ -7,6 +7,9 @@ public class AppConfig {
 
     public static final Long MAIN_SERVICE_CRASH_RESTART_TIMEOUT_MS = TimeUnit.MINUTES.toMillis(10);
 
+    public static final String PROMETHEUS_CONFIG_METRICS_NAMESPACE = "HomeServer";
+    public static final int PROMETHEUS_CONFIG_CLIENT_SERVER_PORT = 9093;
+
     public static final Long EXECUTOR_POLL_FOR_DEAD_THREADS_AND_RERUN_EVERY_X_MS = TimeUnit.MINUTES.toMillis(5);
 
     public static final boolean SELENIUM_DRIVER_FACTORY_HEADLESS_MODE = false;
