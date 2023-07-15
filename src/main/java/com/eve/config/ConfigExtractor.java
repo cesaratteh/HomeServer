@@ -41,14 +41,10 @@ public class ConfigExtractor {
     private static Set<String> getConfigFiles(String folder, int maxDepth) throws URISyntaxException, IOException {
         Set<String> result;
         URI uri = ConfigExtractor.class.getResource(folder).toURI();
+        boolean isJar = uri.getScheme().equals("jar");
 
-        try (FileSystem fileSystem = FileSystems.newFileSystem(uri, Collections.emptyMap())) {
-            Path myPath;
-            if (uri.getScheme().equals("jar")) {
-                myPath = fileSystem.getPath(folder);
-            } else {
-                myPath = Paths.get(uri);
-            }
+        try (FileSystem fileSystem = isJar ? FileSystems.newFileSystem(uri, Collections.emptyMap()) : null) {
+            Path myPath = isJar ? fileSystem.getPath(folder) : Paths.get(uri);
 
             result = Files.walk(myPath, maxDepth)
                     .filter(Files::isRegularFile)
