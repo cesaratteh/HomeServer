@@ -16,4 +16,8 @@ wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo apt -y install ./google-chrome-stable_current_amd64.deb
 
 ## Setting up a new device
-* Install docker
+* Install Chocolatey - `https://chocolatey.org/install`
+* Install JDK19 - `https://www.oracle.com/java/technologies/downloads/`
+* Open Admin PowerShell
+  * Install docker - `choco install docker-desktop`
+  * Install maven - `choco install maven`
