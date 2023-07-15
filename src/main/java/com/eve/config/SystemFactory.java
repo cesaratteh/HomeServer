@@ -4,11 +4,9 @@ import com.eve.dao.BizBuySellDao;
 import com.eve.dao.database.SQLiteDB;
 import com.eve.handlers.Executor;
 import com.eve.handlers.biz_buy_sell.BizBuySellRunnable;
-import com.eve.handlers.facebook_marketplace.FacebookMarketplaceCarRunnable;
 import com.eve.notifier.IFTTTWebhookNotifier;
 import com.eve.notifier.Notifier;
 
-import java.io.IOException;
 import java.util.concurrent.Executors;
 
 public class SystemFactory {
@@ -18,7 +16,9 @@ public class SystemFactory {
     public static void initialize(String[] args) {
         try {
             initShutdownHook();
+            ConfigExtractor.init();
             PrometheusConfig.init();
+            Docker.up();
             JsonMapper.init();
 
             Notifier webhookNotifier =
@@ -50,7 +50,7 @@ public class SystemFactory {
             LoggerFactory.getLogger(SystemFactory.class)
                     .info("Successfully initialized SystemFactory, starting executor");
             executor.start();
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
@@ -60,6 +60,7 @@ public class SystemFactory {
             try {
                 LoggerFactory.getLogger(SystemFactory.class).info("Shutting down ...");
                 PrometheusConfig.shutdown();
+                Docker.down();
             } catch (Exception e) {
                 Thread.currentThread().interrupt();
                 LoggerFactory.getLogger(SystemFactory.class).error("Error caught while executing" +

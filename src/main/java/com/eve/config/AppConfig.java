@@ -1,11 +1,21 @@
 package com.eve.config;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
 
 public class AppConfig {
+    public static final String PWD = System.getProperty("user.dir");
+    public static final String CONFIG_EXTRACTOR_RESOURCES_CONFIG_DIR_NAME = "config";
+    public static final Path EXTERNAL_CONFIG_ABSOLUTE_PATH =
+            Paths.get(PWD, CONFIG_EXTRACTOR_RESOURCES_CONFIG_DIR_NAME);
+
     public static final String SQLITE_DAO_DB_FILE = "database.db";
 
     public static final Long MAIN_SERVICE_CRASH_RESTART_TIMEOUT_MS = TimeUnit.MINUTES.toMillis(10);
+
+    public static final String DOCKER_CONFIG_DOCKER_COMPOSE_FILE = "docker-compose.yml";
+    public static final String DOCKER_CONFIG_DOCKER_COMPOSE_PROJECT_NAME = "home-server";
 
     public static final String PROMETHEUS_CONFIG_METRICS_NAMESPACE = "HomeServer";
     public static final int PROMETHEUS_CONFIG_CLIENT_SERVER_PORT = 9093;
