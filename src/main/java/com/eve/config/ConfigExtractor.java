@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Deprecated
 public class ConfigExtractor {
 
     private static final String CONFIG_RESOURCES_SOURCE_DIRECTORY_NAME =

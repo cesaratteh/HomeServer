@@ -1,10 +1,13 @@
 # HomeService
 
 ## To create JAR 
-Compile, then run assembly:single
+mvn deploy -P release
 
 ## Running the JAR
 java -jar file.jar
+
+## Running in intellij
+Compile using maven, then run
 
 ## Setting up a new device
 * Install Chocolatey - `https://chocolatey.org/install`

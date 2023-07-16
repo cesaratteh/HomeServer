@@ -16,7 +16,6 @@ public class SystemFactory {
     public static void initialize(String[] args) {
         try {
             initShutdownHook();
-            ConfigExtractor.init();
             PrometheusConfig.init();
             Docker.up();
             JsonMapper.init();
