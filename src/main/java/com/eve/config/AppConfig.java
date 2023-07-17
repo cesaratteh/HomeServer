@@ -8,7 +8,7 @@ public class AppConfig {
     public static final String PWD = System.getProperty("user.dir");
     public static final String CONFIG_EXTRACTOR_RESOURCES_CONFIG_DIR_NAME = "config";
     public static final Path EXTERNAL_CONFIG_ABSOLUTE_PATH =
-            Paths.get(PWD, CONFIG_EXTRACTOR_RESOURCES_CONFIG_DIR_NAME);
+            Paths.get(PWD);
 
     public static final String SQLITE_DAO_DB_FILE = "database.db";
 
