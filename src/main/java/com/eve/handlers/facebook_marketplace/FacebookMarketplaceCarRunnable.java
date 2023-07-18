@@ -1,6 +1,6 @@
 package com.eve.handlers.facebook_marketplace;
 
-import com.eve.config.LoggerFactory;
+import com.eve.config.Logger;
 import com.eve.notifier.Notifier;
 import com.eve.util.PriceUtil;
 import org.openqa.selenium.By;
@@ -14,6 +14,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class FacebookMarketplaceCarRunnable implements Runnable {
+
+    private final static Logger logger = Logger.getLogger(FacebookMarketplaceCarRunnable.class);
 
     private final static String MARKETPLACE_QUERY_URL =
             "https://www.facebook.com/marketplace/sanfrancisco/vehicles?sortBy=creation_time_descend";
@@ -38,11 +40,11 @@ public class FacebookMarketplaceCarRunnable implements Runnable {
 
     @Override
     public void run() {
-        LoggerFactory.getLogger(this.getClass()).info("Running FacebookMarketplaceCarRunnable");
+        logger.log("Running FacebookMarketplaceCarRunnable");
         chrome.get(MARKETPLACE_QUERY_URL);
 
         List<Car> latest10Cars = getLatest10Cars();
-        LoggerFactory.getLogger(this.getClass()).info("Found the following cars: " + latest10Cars);
+        logger.log("Found the following cars: " + latest10Cars);
 
         chrome.quit();
     }

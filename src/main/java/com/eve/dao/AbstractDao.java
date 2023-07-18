@@ -1,6 +1,6 @@
 package com.eve.dao;
 
-import com.eve.config.LoggerFactory;
+import com.eve.config.Logger;
 import com.eve.dao.database.DataRecord;
 import com.eve.dao.database.SQLiteDB;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AbstractDao<T extends DataRecord> implements Dao<T> {
+
+    private final static Logger logger = Logger.getLogger(AbstractDao.class);
 
     private final SQLiteDB sqLiteDB;
 
@@ -33,7 +35,7 @@ public class AbstractDao<T extends DataRecord> implements Dao<T> {
                 return fromDataRecord(dataRecord);
             }
         } catch (Exception e) {
-            LoggerFactory.getLogger(this.getClass()).error("BizBuySellDao get failed with exception ", e);
+            logger.error("BizBuySellDao get failed with exception ", e);
         }
 
         return null;
@@ -46,7 +48,7 @@ public class AbstractDao<T extends DataRecord> implements Dao<T> {
         try {
             ids = sqLiteDB.getAllIds();
         } catch (Exception e) {
-            LoggerFactory.getLogger(this.getClass()).error("BizBuySellDao getAllIds failed with exception ", e);
+            logger.error("BizBuySellDao getAllIds failed with exception ", e);
         }
 
         return ids;
@@ -57,7 +59,7 @@ public class AbstractDao<T extends DataRecord> implements Dao<T> {
         try {
             sqLiteDB.update(toDataRecord(listing));
         } catch (Exception e) {
-            LoggerFactory.getLogger(this.getClass()).error("BizBuySellDao put failed with exception ", e);
+            logger.error("BizBuySellDao put failed with exception ", e);
         }
     }
 
@@ -66,7 +68,7 @@ public class AbstractDao<T extends DataRecord> implements Dao<T> {
         try {
             sqLiteDB.insert(toDataRecord(listing));
         } catch (Exception e) {
-            LoggerFactory.getLogger(this.getClass()).error("BizBuySellDao put failed with exception ", e);
+            logger.error("BizBuySellDao put failed with exception ", e);
         }
     }
 

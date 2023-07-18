@@ -1,7 +1,7 @@
 package com.eve.handlers.biz_buy_sell;
 
 import com.eve.config.AppConfig;
-import com.eve.config.LoggerFactory;
+import com.eve.config.Logger;
 import com.eve.dao.BizBuySellDao;
 import com.eve.notifier.Notifier;
 import com.eve.util.Wait;
@@ -9,10 +9,11 @@ import org.openqa.selenium.WebDriver;
 
 public class BizBuySellRunnable implements Runnable {
 
+    private final static Logger logger = Logger.getLogger(BizBuySellRunnable.class);
+
     public static final String BIZ_BUY_SELL_NATIONWIDE_3D_QUERY_URL = AppConfig.BIZ_BUY_SELL_RUNNABLE_NATIONWIDE_3DAYS_QUERY_URL;
     public static final long FETCH_LISTINGS_EVERY_MS = AppConfig.BIZ_BUY_SELL_FETCH_NEW_LISTINGS_EVERY_X_MS;
     public static final long CHECK_LISTINGS_STILL_UP_EVERY_X_MS = AppConfig.BIZ_BUY_SELL_CHECK_LISTINGS_STILL_UP_EVERY_X_MS;
-
     private static long lastUpdateTime = System.currentTimeMillis();
 
     private static boolean isFirstRun = true;
@@ -39,7 +40,7 @@ public class BizBuySellRunnable implements Runnable {
 
     @Override
     public void run() {
-        LoggerFactory.getLogger(this.getClass()).info("Running BizBuySellRunnable");
+        logger.log("Running BizBuySellRunnable");
 
         try {
             while (true) {
@@ -51,7 +52,7 @@ public class BizBuySellRunnable implements Runnable {
                 }
             }
         } catch (Exception e) {
-            LoggerFactory.getLogger(this.getClass()).error("BizBuySell handler crashed ", e);
+            logger.error("BizBuySell handler crashed ", e);
             throw e;
         } finally {
             chrome.quit();

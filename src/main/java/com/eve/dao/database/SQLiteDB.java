@@ -1,7 +1,7 @@
 package com.eve.dao.database;
 
 import com.eve.config.AppConfig;
-import com.eve.config.LoggerFactory;
+import com.eve.config.Logger;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.sql.*;
@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SQLiteDB implements DB {
+
+    private final static Logger logger = Logger.getLogger(SQLiteDB.class);
+
     private static final String DB_FILE = AppConfig.SQLITE_DAO_DB_FILE;
 
     private final String tableName;
@@ -22,9 +25,9 @@ public class SQLiteDB implements DB {
                     "CREATE TABLE IF NOT EXISTS " + tableName + " (id TEXT PRIMARY KEY, data TEXT)";
             statement.execute(createTableQuery);
 
-            LoggerFactory.getLogger(this.getClass()).info("Initialized SQLiteDB successfully");
+            logger.log("Initialized SQLiteDB successfully");
         } catch (Exception e) {
-            LoggerFactory.getLogger(this.getClass()).error("DaoImpl constructor failed", e);
+            logger.error("DaoImpl constructor failed", e);
         }
     }
 
@@ -45,9 +48,9 @@ public class SQLiteDB implements DB {
             int rowsUpdated = preparedStatement.executeUpdate();
 
             if (rowsUpdated > 0) {
-                LoggerFactory.getLogger(this.getClass()).info("SQLiteDB update successfully updated " + dataRecord);
+                logger.log("SQLiteDB update successfully updated " + dataRecord);
             } else {
-                LoggerFactory.getLogger(this.getClass()).info("SQLiteDB update failed, record not found: " + dataRecord);
+                logger.log("SQLiteDB update failed, record not found: " + dataRecord);
             }
         }
     }
@@ -63,7 +66,7 @@ public class SQLiteDB implements DB {
             preparedStatement.setString(2, dataRecord.data());
 
             preparedStatement.executeUpdate();
-            LoggerFactory.getLogger(this.getClass()).info("SQLiteDB insert successfully added " + dataRecord);
+            logger.log("SQLiteDB insert successfully added " + dataRecord);
         }
     }
 
@@ -90,7 +93,7 @@ public class SQLiteDB implements DB {
             resultSet.close();
         }
 
-        LoggerFactory.getLogger(this.getClass()).info("SQLiteDB returning " + (dataRecord != null ? dataRecord.data() : "empty"));
+        logger.log("SQLiteDB returning " + (dataRecord != null ? dataRecord.data() : "empty"));
         return dataRecord;
     }
 

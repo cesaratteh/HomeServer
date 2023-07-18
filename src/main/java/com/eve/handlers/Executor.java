@@ -1,14 +1,17 @@
 package com.eve.handlers;
 
 import com.eve.config.AppConfig;
-import com.eve.config.LoggerFactory;
+import com.eve.config.Logger;
 import com.eve.config.RunnableFactory;
 import com.eve.util.Wait;
 
 import java.util.HashMap;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 
 public class Executor {
+
+    private final static Logger logger = Logger.getLogger(Executor.class);
 
     private final static Long POLL_FOR_DEAD_THREADS_AND_RERUN_EVERY_X_MS =
             AppConfig.EXECUTOR_POLL_FOR_DEAD_THREADS_AND_RERUN_EVERY_X_MS;
@@ -26,7 +29,7 @@ public class Executor {
     }
 
     public void start() {
-        LoggerFactory.getLogger(this.getClass()).info("Running runnables");
+        logger.log("Running runnables");
 
         for (RunnableFactory factory : runnableFactories) createRunnableAndRun(factory);
 
@@ -41,8 +44,8 @@ public class Executor {
     private void rerunDeadRunnables(HashMap<RunnableFactory, Future<?>> activeRunnables) {
         activeRunnables.forEach((factory, future) -> {
             if (future.isDone()) {
-                LoggerFactory.getLogger(Executor.class).error(
-                        "Found a dead runnable, restarting " + factory, RuntimeException::new);
+                logger.error("Found a dead runnable, restarting " + factory,
+                        new RuntimeException());
                 createRunnableAndRun(factory);
             }
         });

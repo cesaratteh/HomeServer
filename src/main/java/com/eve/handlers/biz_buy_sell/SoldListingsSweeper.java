@@ -1,6 +1,6 @@
 package com.eve.handlers.biz_buy_sell;
 
-import com.eve.config.LoggerFactory;
+import com.eve.config.Logger;
 import com.eve.dao.BizBuySellDao;
 import com.eve.dao.BizBuySellListing;
 import org.openqa.selenium.By;
@@ -11,6 +11,8 @@ import java.util.Date;
 import java.util.List;
 
 public class SoldListingsSweeper {
+
+    private final static Logger logger = Logger.getLogger(SoldListingsSweeper.class);
 
     private final WebDriver chrome;
     private final BizBuySellDao dao;
@@ -38,7 +40,7 @@ public class SoldListingsSweeper {
             }
         }
 
-        LoggerFactory.getLogger(this.getClass()).info("Sweeper results: TotalItems/WasAlreadySold/JustMarkedAsSold " +
+        logger.log("Sweeper results: TotalItems/WasAlreadySold/JustMarkedAsSold " +
                 allIds.size() + "/" + alreadySold + "/" + markedSold);
     }
 

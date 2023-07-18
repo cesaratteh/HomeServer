@@ -4,6 +4,8 @@ import org.apache.commons.cli.*;
 
 public class CommandLineArgumentsConfig {
 
+    private final static Logger logger = Logger.getLogger(CommandLineArgumentsConfig.class);
+
     private final Options options;
     private Arguments arguments;
 
@@ -23,9 +25,9 @@ public class CommandLineArgumentsConfig {
                     cmd.getOptionValue("toEmail")
             );
 
-            LoggerFactory.getLogger(this.getClass()).info(this.arguments.toString());
+            logger.log(this.arguments.toString());
         } catch (ParseException e) {
-            LoggerFactory.getLogger(this.getClass()).error(e.getMessage(), e);
+            logger.error(e.getMessage(), e);
             System.exit(1);
         }
     }

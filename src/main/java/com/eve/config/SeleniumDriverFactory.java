@@ -7,6 +7,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 public class SeleniumDriverFactory {
 
+    private final static Logger logger = Logger.getLogger(SeleniumDriverFactory.class);
+
     private static final boolean HEADLESS_MODE = AppConfig.SELENIUM_DRIVER_FACTORY_HEADLESS_MODE;
     private static final long DRIVER_DELAY_MILLIS = AppConfig.SELENIUM_DRIVER_DELAY_IN_MILLIS;
 
@@ -37,8 +39,7 @@ public class SeleniumDriverFactory {
             try {
                 Thread.sleep(DRIVER_DELAY_MILLIS);
             } catch (InterruptedException e) {
-                LoggerFactory.getLogger(this.getClass())
-                        .error("Interrupted while delaying WebDriver get ", e);
+                logger.error("Interrupted while delaying WebDriver get ", e);
             }
         }
     }

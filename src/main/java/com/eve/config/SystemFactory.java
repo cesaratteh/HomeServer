@@ -11,6 +11,8 @@ import java.util.concurrent.Executors;
 
 public class SystemFactory {
 
+    private final static Logger logger = Logger.getLogger(SystemFactory.class);
+
     private static final int EXECUTOR_THREAD_POOL_SIZE = AppConfig.SYSTEM_FACTORY_EXECUTOR_THREAD_POOL_SIZE;
 
     public static void initialize(String[] args) {
@@ -46,8 +48,7 @@ public class SystemFactory {
 //                            webhookNotifier)
             );
 
-            LoggerFactory.getLogger(SystemFactory.class)
-                    .info("Successfully initialized SystemFactory, starting executor");
+            logger.log("Successfully initialized SystemFactory, starting executor");
             executor.start();
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -57,13 +58,12 @@ public class SystemFactory {
     private static void initShutdownHook() {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
-                LoggerFactory.getLogger(SystemFactory.class).info("Shutting down ...");
+                logger.log("Shutting down ...");
                 PrometheusConfig.shutdown();
                 Docker.down();
             } catch (Exception e) {
                 Thread.currentThread().interrupt();
-                LoggerFactory.getLogger(SystemFactory.class).error("Error caught while executing" +
-                        "shutdown hook", e);
+                logger.error("Error caught while executing shutdown hook", e);
             }
         }));
     }

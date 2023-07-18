@@ -6,6 +6,18 @@ public class DataRecord {
     private String id;
     private String data;
 
+    public DataRecord() {
+    }
+
+    public DataRecord(String id) {
+        this.id = id;
+    }
+
+    public DataRecord(String id, String data) {
+        this.id = id;
+        this.data = data;
+    }
+
     public String getId() {
         return id;
     }
@@ -18,18 +30,6 @@ public class DataRecord {
 
     public String pullData() throws JsonProcessingException {
         throw new RuntimeException("Must be overriden");
-    }
-
-    public DataRecord() {
-    }
-
-    public DataRecord(String id) {
-        this.id = id;
-    }
-
-    public DataRecord(String id, String data) {
-        this.id = id;
-        this.data = data;
     }
 
     @Override
