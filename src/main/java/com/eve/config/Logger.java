@@ -18,6 +18,10 @@ public class Logger {
         actualLogger.info(message);
     }
 
+    public void error(String message) {
+        actualLogger.error(message);
+    }
+
     public void error(String message, Throwable e) {
         actualLogger.error(message, e);
     }

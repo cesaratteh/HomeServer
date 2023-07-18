@@ -44,8 +44,7 @@ public class Executor {
     private void rerunDeadRunnables(HashMap<RunnableFactory, Future<?>> activeRunnables) {
         activeRunnables.forEach((factory, future) -> {
             if (future.isDone()) {
-                logger.error("Found a dead runnable, restarting " + factory,
-                        new RuntimeException());
+                logger.error("Found a dead runnable, restarting " + factory);
                 createRunnableAndRun(factory);
             }
         });
