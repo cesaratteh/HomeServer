@@ -5,6 +5,7 @@ import io.prometheus.client.Counter;
 import io.prometheus.client.exporter.HTTPServer;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 
 public class PrometheusConfig {
 
@@ -16,7 +17,7 @@ public class PrometheusConfig {
 
     public static void init() throws IOException {
         registry = new CollectorRegistry();
-        server = new HTTPServer(SERVER_PORT);
+        server = new HTTPServer(new InetSocketAddress(SERVER_PORT), registry);
     }
 
     public static Counter counter(String subsystem, String name, String help) {

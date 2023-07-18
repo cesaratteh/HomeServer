@@ -183,16 +183,23 @@
             <version>2.20.0</version>
         </dependency>
 
+        <!-- Disable SLF4J warning in console. It's not really used.-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-nop</artifactId>
+            <version>2.0.7</version>
+        </dependency>
+
         <dependency>
             <groupId>io.prometheus</groupId>
             <artifactId>simpleclient</artifactId>
-            <version>0.10.0</version>
+            <version>0.16.0</version>
         </dependency>
 
         <dependency>
             <groupId>io.prometheus</groupId>
             <artifactId>simpleclient_httpserver</artifactId>
-            <version>0.10.0</version>
+            <version>0.16.0</version>
         </dependency>
     </dependencies>
 </project>
