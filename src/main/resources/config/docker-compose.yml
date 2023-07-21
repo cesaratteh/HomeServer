@@ -5,19 +5,31 @@ services:
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - ./prometheus_data:/prometheus
-
     ports:
-      - 9090:9090
+      - "9090:9090"
     command: ["--config.file=/etc/prometheus/prometheus.yml"]
-
   grafana:
     image: grafana/grafana:latest
     volumes:
       - ./grafana.ini:/etc/grafana/grafana.ini
       - ./grafana_data:/var/lib/grafana
     ports:
-      - 3001:3001
+      - "3001:3001"
     command: ["--config", "/etc/grafana/grafana.ini"]
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    environment:
+      - TZ=PDT
+      - WEBUI_PORT=8070
+    volumes:
+      - ./qbittorrent_data:/config
+      - ./media/downloads:/downloads
+    ports:
+      - "8070:8070"
+      - "6881:6881"
+      - "6881:6881/udp"
+    restart: unless-stopped
 volumes:
   prometheus_data:
   grafana_data:
+  qbittorrent_data:
