@@ -9,6 +9,12 @@ java -jar file.jar
 ## Running in intellij
 Compile using maven, then run
 
+## Accessing tools
+* Grafana [http://localhost:3001](http://localhost:3001)
+* Prometheus [http://localhost:9090](http://localhost:9090)
+* QBitTorrent [http://localhost:8095](http://localhost:8095)
+* JellyFin [http://localhost:8096](http://localhost:8096)
+
 ## Setting up a new device
 * Install Chocolatey - `https://chocolatey.org/install`
 * Install JDK19 - `https://www.oracle.com/java/technologies/downloads/`

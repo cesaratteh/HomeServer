@@ -18,7 +18,7 @@ public class SystemFactory {
     public static void initialize(String[] args) {
         try {
             initShutdownHook();
-            PrometheusConfig.init();
+            Prometheus.init();
             Docker.up();
             JsonMapper.init();
 
@@ -59,7 +59,7 @@ public class SystemFactory {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
                 logger.log("Shutting down ...");
-                PrometheusConfig.shutdown();
+                Prometheus.shutdown();
                 Docker.down();
             } catch (Exception e) {
                 Thread.currentThread().interrupt();

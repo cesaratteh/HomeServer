@@ -2,14 +2,20 @@ package com.eve.handlers.biz_buy_sell;
 
 import com.eve.config.AppConfig;
 import com.eve.config.Logger;
+import com.eve.config.Prometheus;
 import com.eve.dao.BizBuySellDao;
 import com.eve.notifier.Notifier;
 import com.eve.util.Wait;
+import io.prometheus.client.Enumeration;
 import org.openqa.selenium.WebDriver;
 
 public class BizBuySellRunnable implements Runnable {
 
     private final static Logger logger = Logger.getLogger(BizBuySellRunnable.class);
+
+    private enum STATES {SoldListingsSweeper, NewListingsPuller}
+    private final static Enumeration CURRENT_STATE_METRIC = Prometheus.enumeration(
+            BizBuySellRunnable.class, "State", STATES.class);
 
     public static final String BIZ_BUY_SELL_NATIONWIDE_3D_QUERY_URL = AppConfig.BIZ_BUY_SELL_RUNNABLE_NATIONWIDE_3DAYS_QUERY_URL;
     public static final long FETCH_LISTINGS_EVERY_MS = AppConfig.BIZ_BUY_SELL_FETCH_NEW_LISTINGS_EVERY_X_MS;
@@ -44,8 +50,10 @@ public class BizBuySellRunnable implements Runnable {
 
         try {
             while (true) {
+                CURRENT_STATE_METRIC.state(STATES.NewListingsPuller);
                 Wait.waitThenPerformAction(newListingsPuller::pullLatestListings, FETCH_LISTINGS_EVERY_MS);
 
+                CURRENT_STATE_METRIC.state(STATES.SoldListingsSweeper);
                 if (shouldRunSoldListingSweeper()) {
                     soldListingsSweeper.sweepAllListingsAndMarkSoldOnes();
                     lastUpdateTime = System.currentTimeMillis();
