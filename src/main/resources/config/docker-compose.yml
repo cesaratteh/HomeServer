@@ -4,15 +4,18 @@ services:
     image: prom/prometheus:latest
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
-      - ./prometheus_data:/prometheus
+      - ./data/prometheus_data:/prometheus
     ports:
       - "9090:9090"
     command: ["--config.file=/etc/prometheus/prometheus.yml"]
   grafana:
     image: grafana/grafana:latest
     volumes:
-      - ./grafana.ini:/etc/grafana/grafana.ini
-      - ./grafana_data:/var/lib/grafana
+      - ./data/grafana_data:/var/lib/grafana
+      - ./grafana-config/grafana.ini:/etc/grafana/grafana.ini
+      - ./grafana-config/datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
+      - ./grafana-config/dashboard.yaml:/etc/grafana/provisioning/dashboards/dashboard.yaml
+      - ./grafana-config/dashboard-files:/var/lib/grafana/dashboard-files
     ports:
       - "3001:3001"
     command: ["--config", "/etc/grafana/grafana.ini"]
@@ -22,7 +25,7 @@ services:
       - TZ=PDT
       - WEBUI_PORT=8095
     volumes:
-      - ./qbittorrent_data:/config
+      - ./data/qbittorrent_data:/config
       - ./media/downloads:/downloads
     ports:
       - "8095:8095"
