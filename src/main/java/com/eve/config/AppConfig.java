@@ -9,7 +9,7 @@ public class AppConfig {
     public static final String LINE_SEPARATOR = System.getProperty("line.separator");
     public static final String PWD = System.getProperty("user.dir");
     public static final String CONFIG_EXTRACTOR_RESOURCES_CONFIG_DIR_NAME = "config";
-    public static final Path EXTERNAL_CONFIG_ABSOLUTE_PATH = Paths.get(PWD);
+    public static final Path EXTERNAL_CONFIG_ABSOLUTE_PATH = Paths.get(PWD, CONFIG_EXTRACTOR_RESOURCES_CONFIG_DIR_NAME);
 
     public static final Long MAIN_SERVICE_CRASH_RESTART_TIMEOUT_MS = TimeUnit.MINUTES.toMillis(10);
     public static final int SYSTEM_FACTORY_EXECUTOR_THREAD_POOL_SIZE = 5;

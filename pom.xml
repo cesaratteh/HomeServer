@@ -28,7 +28,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.basedir}</outputDirectory>
+                            <outputDirectory>${project.basedir}/config</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>src/main/resources/config</directory>
@@ -73,7 +73,7 @@
                                     <goal>copy-resources</goal>
                                 </goals>
                                 <configuration>
-                                    <outputDirectory>${user.home}/Desktop/Environments/HomeServer/</outputDirectory>
+                                    <outputDirectory>${user.home}/Desktop/Environments/HomeServer/config</outputDirectory>
                                     <resources>
                                         <resource>
                                             <directory>src/main/resources/config</directory>
