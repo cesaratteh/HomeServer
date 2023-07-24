@@ -1,7 +1,10 @@
 package com.eve.handlers.biz_buy_sell;
 
+import com.eve.config.Logger;
+import com.eve.config.Prometheus;
 import com.eve.dao.BizBuySellDao;
 import com.eve.dao.BizBuySellListing;
+import io.prometheus.client.Counter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,6 +16,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class NewListingsPuller {
+
+    private final static Logger LOGGER = Logger.getLogger(NewListingsPuller.class);
+
+    private final static Counter NEW_LISTINGS_STORED = Prometheus.counter(NewListingsPuller.class, "NewListingsStored");
+    private final static Counter EXISTING_LISTINGS_UPDATED = Prometheus.counter(NewListingsPuller.class, "ExistingListingsUpdated");
 
     private static final Pattern BIZ_LISTING_URL_REGEX =
             Pattern.compile("https://www\\.bizbuysell\\.com/Business-Opportunity/([A-Za-z0-9]+(-[A-Za-z0-9]+)+)/[0-9]+/", Pattern.CASE_INSENSITIVE);
@@ -35,10 +43,15 @@ public class NewListingsPuller {
 
             if (dao.isPresent(listingId)) {
                 updateLastSeenDate(listingId);
+                EXISTING_LISTINGS_UPDATED.inc();
             } else {
                 storeListing(listingId, listingUrl);
+                NEW_LISTINGS_STORED.inc();
             }
         }
+
+        LOGGER.log("New listings puller results: NewListingsStored/ExistingListingsUpdated " +
+                NEW_LISTINGS_STORED.get() + "/" + EXISTING_LISTINGS_UPDATED.get());
     }
 
     private void updateLastSeenDate(String listingId) {

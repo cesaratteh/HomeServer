@@ -1,8 +1,10 @@
 package com.eve.handlers.biz_buy_sell;
 
 import com.eve.config.Logger;
+import com.eve.config.Prometheus;
 import com.eve.dao.BizBuySellDao;
 import com.eve.dao.BizBuySellListing;
+import io.prometheus.client.Counter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,7 +14,10 @@ import java.util.List;
 
 public class SoldListingsSweeper {
 
-    private final static Logger logger = Logger.getLogger(SoldListingsSweeper.class);
+    private final static Logger LOGGER = Logger.getLogger(SoldListingsSweeper.class);
+
+    private final static Counter UPDATED_LAST_SEEN = Prometheus.counter(SoldListingsSweeper.class, "UpdatedLastSeen");
+    private final static Counter MARKED_SOLD = Prometheus.counter(SoldListingsSweeper.class, "MarkedSold");
 
     private final WebDriver chrome;
     private final BizBuySellDao dao;
@@ -24,24 +29,22 @@ public class SoldListingsSweeper {
 
     public void sweepAllListingsAndMarkSoldOnes() {
         List<String> allIds = dao.getAllIds();
-        int markedSold = 0;
-        int alreadySold = 0;
 
         for (String id : allIds) {
             if (isSoldInDao(id)) {
-                alreadySold++;
             } else {
                 if (isSoldOnline(id)) {
                     markSold(id);
-                    markedSold++;
+                    MARKED_SOLD.inc();
                 } else {
                     updateLastSeenDate(id);
+                    UPDATED_LAST_SEEN.inc();
                 }
             }
         }
 
-        logger.log("Sweeper results: TotalItems/WasAlreadySold/JustMarkedAsSold " +
-                allIds.size() + "/" + alreadySold + "/" + markedSold);
+        LOGGER.log("Sweeper results: TotalItems/UpdatedLastSeen/MarkedSold " +
+                allIds.size() + "/" + UPDATED_LAST_SEEN.get() + "/" + MARKED_SOLD.get());
     }
 
     private boolean isSoldInDao(String id) {

@@ -1,6 +1,7 @@
 package com.eve.config;
 
 import io.prometheus.client.CollectorRegistry;
+import io.prometheus.client.Counter;
 import io.prometheus.client.Enumeration;
 import io.prometheus.client.Gauge;
 import io.prometheus.client.exporter.HTTPServer;
@@ -23,6 +24,17 @@ public class Prometheus {
 
     public static Gauge gauge(Class subsystem, String name) {
         Gauge result = Gauge.build()
+                .namespace(METRICS_NAMESPACE)
+                .subsystem(subsystem.getSimpleName())
+                .name(name)
+                .help("good luck")
+                .register();
+        registry.register(result);
+        return result;
+    }
+
+    public static Counter counter(Class subsystem, String name) {
+        Counter result = Counter.build()
                 .namespace(METRICS_NAMESPACE)
                 .subsystem(subsystem.getSimpleName())
                 .name(name)

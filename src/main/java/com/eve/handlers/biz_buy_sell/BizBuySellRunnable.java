@@ -6,6 +6,7 @@ import com.eve.config.Prometheus;
 import com.eve.dao.BizBuySellDao;
 import com.eve.notifier.Notifier;
 import com.eve.util.Wait;
+import io.prometheus.client.Counter;
 import io.prometheus.client.Enumeration;
 import org.openqa.selenium.WebDriver;
 
@@ -16,6 +17,8 @@ public class BizBuySellRunnable implements Runnable {
     private enum STATES {SoldListingsSweeper, NewListingsPuller}
     private final static Enumeration CURRENT_STATE_METRIC = Prometheus.enumeration(
             BizBuySellRunnable.class, "State", STATES.class);
+    private final static Counter CRASHED = Prometheus.counter(
+            BizBuySellRunnable.class, "Crashed");
 
     public static final String BIZ_BUY_SELL_NATIONWIDE_3D_QUERY_URL = AppConfig.BIZ_BUY_SELL_RUNNABLE_NATIONWIDE_3DAYS_QUERY_URL;
     public static final long FETCH_LISTINGS_EVERY_MS = AppConfig.BIZ_BUY_SELL_FETCH_NEW_LISTINGS_EVERY_X_MS;
@@ -60,6 +63,7 @@ public class BizBuySellRunnable implements Runnable {
                 }
             }
         } catch (Exception e) {
+            CRASHED.inc();
             logger.error("BizBuySell handler crashed ", e);
             throw e;
         } finally {
