@@ -18,7 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 2,
+  "id": 3,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -78,11 +78,24 @@
             "uid": "a6149da8-c109-40b1-b01f-8cbf3c402a78"
           },
           "editorMode": "builder",
+          "expr": "increase(HomeServer_BizBuySellRunnable_Crashed_total[10m])",
+          "instant": false,
+          "legendFormat": "Crashed [10min Aggregated]",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "a6149da8-c109-40b1-b01f-8cbf3c402a78"
+          },
+          "editorMode": "builder",
           "expr": "increase(HomeServer_BizBuySellRunnable_Crashed_total[1h])",
+          "hide": false,
           "instant": false,
           "legendFormat": "Crashed [1hr Aggregated]",
           "range": true,
-          "refId": "A"
+          "refId": "B"
         },
         {
           "datasource": {
@@ -95,7 +108,7 @@
           "instant": false,
           "legendFormat": "Crashed [24hr Aggregated]",
           "range": true,
-          "refId": "B"
+          "refId": "C"
         }
       ],
       "title": "HomeServer_BizBuySellRunnable_Crashed",
@@ -443,6 +456,6 @@
   "timezone": "",
   "title": "HomeServer Main Dashboard",
   "uid": "e08e3d9d-1754-4fc8-af96-0ed015b6dd93",
-  "version": 2,
+  "version": 3,
   "weekStart": ""
 }
