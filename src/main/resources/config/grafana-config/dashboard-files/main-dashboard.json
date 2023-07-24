@@ -300,6 +300,19 @@
           "legendFormat": "ExistingListingsUpdated [24hr Aggregated]",
           "range": true,
           "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "a6149da8-c109-40b1-b01f-8cbf3c402a78"
+          },
+          "editorMode": "builder",
+          "expr": "increase(HomeServer_NewListingsPuller_NewListingsStoredWithMissingData_total[24h])",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "NewListingsStoredWithMissingData [24hr Aggregated]",
+          "range": true,
+          "refId": "C"
         }
       ],
       "title": "HomeServer_NewListingsPuller",

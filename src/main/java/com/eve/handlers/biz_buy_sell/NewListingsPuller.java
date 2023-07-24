@@ -21,6 +21,7 @@ public class NewListingsPuller {
 
     private final static Counter NEW_LISTINGS_STORED = Prometheus.counter(NewListingsPuller.class, "NewListingsStored");
     private final static Counter EXISTING_LISTINGS_UPDATED = Prometheus.counter(NewListingsPuller.class, "ExistingListingsUpdated");
+    private final static Counter NEW_LISTINGS_STORED_WITH_MISSING_DATA = Prometheus.counter(NewListingsPuller.class, "NewListingsStoredWithMissingData");
 
     private static final Pattern BIZ_LISTING_URL_REGEX =
             Pattern.compile("https://www\\.bizbuysell\\.com/Business-Opportunity/([A-Za-z0-9]+(-[A-Za-z0-9]+)+)/[0-9]+/", Pattern.CASE_INSENSITIVE);
@@ -74,11 +75,21 @@ public class NewListingsPuller {
     private void storeListing(String listingId, String listingUrl) {
         chrome.get(listingUrl);
 
-        String title = chrome.findElement(By.className("bfsTitle")).getText();
-        String financials = chrome.findElement(By.className("financials")).getText();
-        String description = chrome.findElement(By.className("businessDescription")).getText();
-        String detailedInformation = chrome.findElement(By.className("listingProfile_details")).getText();
-        String broker = chrome.findElement(By.className("broker")).getText();
+        String title = "", financials = "", description = "",
+                detailedInformation = "", broker = "";
+
+        try {
+            title = chrome.findElement(By.className("bfsTitle")).getText();
+            financials = chrome.findElement(By.className("financials")).getText();
+            description = chrome.findElement(By.className("businessDescription")).getText();
+            detailedInformation = chrome.findElement(By.className("listingProfile_details")).getText();
+            broker = chrome.findElement(By.className("broker")).getText();
+        } catch (org.openqa.selenium.NoSuchElementException e) {
+            NEW_LISTINGS_STORED_WITH_MISSING_DATA.inc();
+            LOGGER.error(String.format("Storing %s - %s with missing data. " +
+                    "title: %s, financials: %s, description: %s, detailedInformation: %s, broker: %s",
+                    listingId, listingUrl, title, financials, description, detailedInformation, broker), e);
+        }
 
         BizBuySellListing listing = new BizBuySellListing(
                 listingId,
