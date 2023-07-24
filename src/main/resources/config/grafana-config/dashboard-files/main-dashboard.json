@@ -25,7 +25,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "a6149da8-c109-40b1-b01f-8cbf3c402a78"
       },
       "fieldConfig": {
         "defaults": {
@@ -75,7 +75,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "a6149da8-c109-40b1-b01f-8cbf3c402a78"
           },
           "editorMode": "builder",
           "expr": "increase(HomeServer_BizBuySellRunnable_Crashed_total[1h])",
@@ -87,7 +87,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "a6149da8-c109-40b1-b01f-8cbf3c402a78"
           },
           "editorMode": "builder",
           "expr": "increase(HomeServer_BizBuySellRunnable_Crashed_total[24h])",
@@ -104,7 +104,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "a6149da8-c109-40b1-b01f-8cbf3c402a78"
       },
       "fieldConfig": {
         "defaults": {
@@ -181,7 +181,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "a6149da8-c109-40b1-b01f-8cbf3c402a78"
           },
           "editorMode": "builder",
           "expr": "HomeServer_BizBuySellRunnable_State",
@@ -199,7 +199,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "a6149da8-c109-40b1-b01f-8cbf3c402a78"
       },
       "fieldConfig": {
         "defaults": {
@@ -279,7 +279,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "a6149da8-c109-40b1-b01f-8cbf3c402a78"
           },
           "editorMode": "builder",
           "expr": "increase(HomeServer_NewListingsPuller_NewListingsStored_total[24h])",
@@ -291,7 +291,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "a6149da8-c109-40b1-b01f-8cbf3c402a78"
           },
           "editorMode": "builder",
           "expr": "increase(HomeServer_NewListingsPuller_ExistingListingsUpdated_total[24h])",
@@ -308,7 +308,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "a6149da8-c109-40b1-b01f-8cbf3c402a78"
       },
       "fieldConfig": {
         "defaults": {
@@ -388,7 +388,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "a6149da8-c109-40b1-b01f-8cbf3c402a78"
           },
           "editorMode": "builder",
           "expr": "increase(HomeServer_SoldListingsSweeper_MarkedSold_total[24h])",
@@ -400,7 +400,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "a6149da8-c109-40b1-b01f-8cbf3c402a78"
           },
           "editorMode": "builder",
           "expr": "increase(HomeServer_SoldListingsSweeper_UpdatedLastSeen_total[24h])",
