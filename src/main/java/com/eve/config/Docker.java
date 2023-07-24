@@ -1,6 +1,7 @@
 package com.eve.config;
 
 import com.eve.util.ProcessRunner;
+import com.eve.util.ProcessRunner.ProcessRunnerException;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -12,12 +13,12 @@ public class Docker {
             Paths.get(AppConfig.EXTERNAL_CONFIG_ABSOLUTE_PATH.toString(), AppConfig.DOCKER_CONFIG_DOCKER_COMPOSE_FILE);
     private final static String DOCKER_COMPOSE_PROJECT_NAME = AppConfig.DOCKER_CONFIG_DOCKER_COMPOSE_PROJECT_NAME;
 
-    public static void up() throws IOException, InterruptedException {
+    public static void up() throws ProcessRunnerException, IOException, InterruptedException {
         ProcessRunner.runSync(String.format("docker-compose -p %s -f %s up -d",
                 DOCKER_COMPOSE_PROJECT_NAME, DOCKER_COMPOSE_FILE_PATH));
     }
 
-    public static void down() throws IOException, InterruptedException {
+    public static void down() throws ProcessRunnerException, IOException, InterruptedException {
         ProcessRunner.runSync(String.format("docker-compose -p %s down",
                 DOCKER_COMPOSE_PROJECT_NAME));
     }

@@ -13,7 +13,7 @@ public class ProcessRunner {
 
     private static final String lineSeparator = AppConfig.LINE_SEPARATOR;
 
-    public static int runSync(String command) throws InterruptedException, IOException {
+    public static void runSync(String command) throws InterruptedException, IOException, ProcessRunnerException {
         ProcessBuilder processBuilder = new ProcessBuilder(command.split(" "));
         processBuilder.redirectErrorStream(true);
         Process process = processBuilder.start();
@@ -37,6 +37,14 @@ public class ProcessRunner {
             logger.error(logMessage);
         }
 
-        return exitCode;
+        if (exitCode != 0) {
+            throw new ProcessRunnerException(command, exitCode, output.toString());
+        }
     }
+
+    public static class ProcessRunnerException extends Exception {
+        public ProcessRunnerException(String command, int exitCode, String output) {
+            super("Process execution error. Command: '" + command + "', Exit code: " + exitCode + ", Output: '" + output + "'");
+        }
+    };
 }
