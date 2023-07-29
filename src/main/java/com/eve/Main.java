@@ -3,6 +3,7 @@ package com.eve;
 import com.eve.config.AppConfig;
 import com.eve.config.Logger;
 import com.eve.config.SystemFactory;
+import com.eve.util.Wait;
 
 public class Main {
 
@@ -22,12 +23,7 @@ public class Main {
                 break;
             } catch (Throwable e) {
                 logger.error("Service crashed with exceptions ", e);
-
-                try {
-                    Thread.sleep(retryTimerMS);
-                } catch (InterruptedException ex) {
-                    logger.error("Thread.sleep threw an exception ", e);
-                }
+                Wait.sleep(retryTimerMS);
             }
         }
     }

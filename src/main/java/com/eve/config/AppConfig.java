@@ -24,7 +24,8 @@ public class AppConfig {
     public static final String SQLITE_DAO_DB_FILE = "database.db";
 
     public static final boolean SELENIUM_DRIVER_FACTORY_HEADLESS_MODE = false;
-    public static final long SELENIUM_DRIVER_DELAY_IN_MILLIS = TimeUnit.SECONDS.toMillis(5);
+    public static final long SELENIUM_DRIVER_MIN_DELAY_IN_MILLIS = TimeUnit.SECONDS.toMillis(7);
+    public static final long SELENIUM_DRIVER_MAX_DELAY_IN_MILLIS = TimeUnit.SECONDS.toMillis(12);
 
     public final static String IFTTT_WEBHOOK_NOTIFIER_IFTTT_API_KEY = "bKQdb9G-C3bN2KUqU6S2cM";
     public final static String IFTTT_WEBHOOK_NOTIFIER_EVENT_NAME = "home_server_notification";

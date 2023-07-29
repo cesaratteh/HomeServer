@@ -1,16 +1,19 @@
 package com.eve.config;
 
+import com.eve.util.Wait;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import java.util.Random;
+
 public class SeleniumDriverFactory {
 
-    private final static Logger logger = Logger.getLogger(SeleniumDriverFactory.class);
-
     private static final boolean HEADLESS_MODE = AppConfig.SELENIUM_DRIVER_FACTORY_HEADLESS_MODE;
-    private static final long DRIVER_DELAY_MILLIS = AppConfig.SELENIUM_DRIVER_DELAY_IN_MILLIS;
+    private static final long DRIVER_MIN_DELAY_MILLIS = AppConfig.SELENIUM_DRIVER_MIN_DELAY_IN_MILLIS;
+    private static final long DRIVER_MAX_DELAY_MILLIS = AppConfig.SELENIUM_DRIVER_MAX_DELAY_IN_MILLIS;
+    private static final Random RANDOM = new Random();
 
     private final ChromeOptions options;
 
@@ -24,23 +27,21 @@ public class SeleniumDriverFactory {
     }
 
     public WebDriver newDriver() {
-        return new FixedDelayChromeDriver(options);
+        return new FuzzyDelayChromeDriver(options);
     }
 
-    class FixedDelayChromeDriver extends ChromeDriver {
+    class FuzzyDelayChromeDriver extends ChromeDriver {
 
-        public FixedDelayChromeDriver(ChromeOptions options) {
+        public FuzzyDelayChromeDriver(ChromeOptions options) {
             super(options);
         }
 
         @Override
         public void get(String url) {
-            super.get(url);
-            try {
-                Thread.sleep(DRIVER_DELAY_MILLIS);
-            } catch (InterruptedException e) {
-                logger.error("Interrupted while delaying WebDriver get ", e);
-            }
+            long delay = DRIVER_MIN_DELAY_MILLIS;
+            delay += (DRIVER_MAX_DELAY_MILLIS - DRIVER_MIN_DELAY_MILLIS) * RANDOM.nextDouble();
+
+            Wait.performActionThenWait(() -> super.get(url), delay);
         }
     }
 }
