@@ -1,10 +1,14 @@
-# HomeService
+# Home Server Docs
 
-## To create JAR 
+## To create JAR
+```
 mvn deploy -P release
+```
 
 ## Running the JAR
+```
 java -jar file.jar
+```
 
 ## Running in intellij
 Compile using maven, then run
@@ -14,6 +18,9 @@ Compile using maven, then run
 * Prometheus [http://localhost:9090](http://localhost:9090)
 * QBitTorrent [http://localhost:8095](http://localhost:8095)
 * JellyFin [http://localhost:8096](http://localhost:8096)
+
+## Handler Docs
+* BizBuySell Handler [docs::BIZ_BUY_SELL.md](docs/BIZ_BUY_SELL.md)
 
 ## Setting up a new device
 * Install Chocolatey - `https://chocolatey.org/install`
