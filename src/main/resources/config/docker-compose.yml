@@ -26,7 +26,7 @@ services:
       - WEBUI_PORT=8095
     volumes:
       - ../data/qbittorrent_data:/config
-      - ./media/downloads:/downloads
+      - ../media/downloads:/downloads
     ports:
       - "8095:8095"
       - "6881:6881"
