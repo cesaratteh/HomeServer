@@ -54,7 +54,7 @@ public class BizBuySellRunnable implements Runnable {
         try {
             while (true) {
                 CURRENT_STATE_METRIC.state(STATES.NewListingsPuller);
-                Wait.waitThenPerformAction(newListingsPuller::pullLatestListings, FETCH_LISTINGS_EVERY_MS);
+                Wait.performActionThenWait(newListingsPuller::pullLatestListings, FETCH_LISTINGS_EVERY_MS);
 
                 CURRENT_STATE_METRIC.state(STATES.SoldListingsSweeper);
                 if (shouldRunSoldListingSweeper()) {

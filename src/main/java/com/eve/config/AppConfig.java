@@ -30,12 +30,8 @@ public class AppConfig {
     public final static String IFTTT_WEBHOOK_NOTIFIER_IFTTT_API_KEY = "bKQdb9G-C3bN2KUqU6S2cM";
     public final static String IFTTT_WEBHOOK_NOTIFIER_EVENT_NAME = "home_server_notification";
 
-    public static String EMAIL_NOTIFIER_FROM_EMAIL;
-    public static String EMAIL_NOTIFIER_FROM_EMAIL_PASSWORD;
-    public static String EMAIL_NOTIFIER_TO_EMAIL;
-
     public static final String BIZ_BUY_SELL_RUNNABLE_NATIONWIDE_3DAYS_QUERY_URL =
             "https://www.bizbuysell.com/businesses-for-sale/?q=ZGxhPTM%3D";
-    public static final long BIZ_BUY_SELL_FETCH_NEW_LISTINGS_EVERY_X_MS = TimeUnit.MINUTES.toMillis(1);
-    public static final long BIZ_BUY_SELL_CHECK_LISTINGS_STILL_UP_EVERY_X_MS = TimeUnit.DAYS.toMillis(1);
+    public static final long BIZ_BUY_SELL_FETCH_NEW_LISTINGS_EVERY_X_MS = TimeUnit.DAYS.toMillis(1);
+    public static final long BIZ_BUY_SELL_CHECK_LISTINGS_STILL_UP_EVERY_X_MS = TimeUnit.DAYS.toMillis(3);
 }
