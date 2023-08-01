@@ -1,8 +1,5 @@
 package com.eve.notifier;
 
-import com.eve.config.AppConfig;
-import com.eve.config.Logger;
-
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
