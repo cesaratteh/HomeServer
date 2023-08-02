@@ -35,4 +35,7 @@ Compile using maven, then run
     * Go through Setup Wizard
       * Set media directories
       * Set directory to the FFmpeg executable (might not be needed)
-  * 
+  * Install qBittorrent - `choco install qbittorrent`
+    * Configure to start on startup
+    * Configure download folder to `~/Desktop/Environments/HomeServer/media/downloads`
+    * enable webUI, set password, and port to `8095`

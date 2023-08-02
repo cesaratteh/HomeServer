@@ -19,19 +19,6 @@ services:
     ports:
       - "3001:3001"
     command: ["--config", "/etc/grafana/grafana.ini"]
-  qbittorrent:
-    image: lscr.io/linuxserver/qbittorrent:latest
-    environment:
-      - TZ=PDT
-      - WEBUI_PORT=8095
-    volumes:
-      - ../data/qbittorrent_data:/config
-      - ../media/downloads:/downloads
-    ports:
-      - "8095:8095"
-      - "6881:6881"
-      - "6881:6881/udp"
-    restart: unless-stopped
 volumes:
   prometheus_data:
   grafana_data:
