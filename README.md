@@ -38,4 +38,4 @@ Compile using maven, then run
   * Install qBittorrent - `choco install qbittorrent`
     * Configure to start on startup
     * Configure download folder to `~/Desktop/Environments/HomeServer/media/downloads`
-    * enable webUI, set password, and port to `8095`
+    * enable webUI, set password, and port to `8095`, allow through firewall
