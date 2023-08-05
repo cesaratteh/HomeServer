@@ -60,7 +60,23 @@
         <profile>
             <id>release</id>
             <build>
+                <directory>${user.home}/Desktop/Environments/HomeServer/build</directory>
                 <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>java</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <mainClass>com.eve.Main</mainClass>
+                        </configuration>
+                    </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-resources-plugin</artifactId>
@@ -79,57 +95,30 @@
                                             <directory>src/main/resources/config</directory>
                                         </resource>
                                     </resources>
-
                                 </configuration>
                             </execution>
                             <execution>
-                                <id>copy-to-jar</id>
+                                <id>copy-pom-file</id>
                                 <phase>compile</phase>
                                 <goals>
                                     <goal>copy-resources</goal>
                                 </goals>
                                 <configuration>
-                                    <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+                                    <outputDirectory>${user.home}/Desktop/Environments/HomeServer</outputDirectory>
                                     <resources>
                                         <resource>
-                                            <directory>src/main/resources/</directory>
+                                            <directory>./</directory>
+                                            <includes>
+                                                <include>pom.xml</include>
+                                            </includes>
                                         </resource>
                                     </resources>
                                 </configuration>
                             </execution>
                         </executions>
                     </plugin>
-                    <plugin>
-                        <artifactId>maven-assembly-plugin</artifactId>
-                        <configuration>
-                            <archive>
-                                <manifest>
-                                    <mainClass>com.eve.Main</mainClass>
-                                </manifest>
-                            </archive>
-                            <descriptorRefs>
-                                <descriptorRef>jar-with-dependencies</descriptorRef>
-                            </descriptorRefs>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>make-assembly</id>
-                                <phase>install</phase>
-                                <goals>
-                                    <goal>single</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
                 </plugins>
             </build>
-
-            <distributionManagement>
-                <repository>
-                    <id>local-repo</id>
-                    <url>file:/${user.home}/Desktop/Environments/HomeServer</url>
-                </repository>
-            </distributionManagement>
         </profile>
     </profiles>
 

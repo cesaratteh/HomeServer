@@ -1,13 +1,18 @@
 # Home Server Docs
 
-## To create JAR
+## To install
 ```
-mvn deploy -P release
+mvn clean install -P release
 ```
 
-## Running the JAR
+## Running the app
 ```
-java -jar file.jar
+cd ~/Desktop/Environments/HomeServer; mvn exec:java -P release
+```
+
+## Single command to pull, build, and run
+```
+git pull; mvn clean install -P release; cd ~/Desktop/Environments/HomeServer; mvn exec:java -P release
 ```
 
 ## Running in intellij
