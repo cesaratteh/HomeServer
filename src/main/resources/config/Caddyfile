@@ -1,0 +1,24 @@
+grafana.cesaratteh.com {
+    reverse_proxy http://grafana:3001
+    basicauth {
+    	cesar $2a$14$rIWSo8moc12sEK61Fz0COezVYfZjzg1lIerAjIB6qNYelLHuwgfnW
+    }
+}
+jellyfin.cesaratteh.com {
+    reverse_proxy http://host.docker.internal:8096
+    basicauth {
+        cesar $2a$14$rIWSo8moc12sEK61Fz0COezVYfZjzg1lIerAjIB6qNYelLHuwgfnW
+    }
+}
+prometheus.cesaratteh.com {
+    reverse_proxy http://prometheus:9090
+    basicauth {
+        cesar $2a$14$rIWSo8moc12sEK61Fz0COezVYfZjzg1lIerAjIB6qNYelLHuwgfnW
+    }
+}
+qbittorrent.cesaratteh.com {
+    reverse_proxy http://host.docker.internal:8095
+    basicauth {
+        cesar $2a$14$rIWSo8moc12sEK61Fz0COezVYfZjzg1lIerAjIB6qNYelLHuwgfnW
+    }
+}

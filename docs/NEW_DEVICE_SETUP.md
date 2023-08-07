@@ -16,9 +16,7 @@
         * Configure to start on startup
         * Configure download folder to `~/Desktop/Environments/HomeServer/media/downloads`
         * enable webUI, set password, and port to `8095`, allow through firewall
-* Setup nginx
-    * Generate nginx password file, and copy it to ENV
-        * For windows - Download Apache HTTP Server `https://httpd.apache.org/download.cgi`
-        * Extract it, and open terminal in the bin directory
-        * Run `htpasswd.exe -c htpasswdfile cesar` to generate password file
-        * Move `htpasswdfile` to ~/Desktop/Environments/HomeServer/data
+* [Optional] Setup Caddy
+  * To generate password `docker-compose run caddy caddy hash-password`
+* Setup grafana behind caddy
+    * Setup username/password that matches caddy
