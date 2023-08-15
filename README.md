@@ -33,4 +33,4 @@ For nginx, create password file in ./data/<[pass_file>
 * BizBuySell Handler [docs::BIZ_BUY_SELL.md](docs/BIZ_BUY_SELL.md)
 
 ## Setting up a new device
-* [docs::NEW_DEVICE_SETUP.md](docs/NEW_DEVICE_SETUP.md)
+* New Device Setup [docs::NEW_DEVICE_SETUP.md](docs/NEW_DEVICE_SETUP.md)

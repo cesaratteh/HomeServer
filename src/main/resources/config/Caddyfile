@@ -6,9 +6,6 @@ grafana.cesaratteh.com {
 }
 jellyfin.cesaratteh.com {
     reverse_proxy http://host.docker.internal:8096
-    basicauth {
-        cesar $2a$14$rIWSo8moc12sEK61Fz0COezVYfZjzg1lIerAjIB6qNYelLHuwgfnW
-    }
 }
 prometheus.cesaratteh.com {
     reverse_proxy http://prometheus:9090
