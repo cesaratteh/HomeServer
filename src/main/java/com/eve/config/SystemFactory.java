@@ -4,6 +4,8 @@ import com.eve.dao.BizBuySellDao;
 import com.eve.dao.database.SQLiteDB;
 import com.eve.handlers.Executor;
 import com.eve.handlers.biz_buy_sell.BizBuySellRunnable;
+import com.eve.handlers.facebook_marketplace.FacebookMarketplaceCarRunnable;
+import com.eve.handlers.facebook_marketplace.cars.VehicleCategoryHandler;
 import com.eve.notifier.IFTTTWebhookNotifier;
 import com.eve.notifier.Notifier;
 
@@ -42,10 +44,11 @@ public class SystemFactory {
                     () -> new BizBuySellRunnable(
                             seleniumDriverFactory.newDriver(),
                             bizBuySellDao,
-                            webhookNotifier)
-//                () ->  new FacebookMarketplaceCarRunnable(
-//                            seleniumDriverFactory.newDriver(),
-//                            webhookNotifier)
+                            webhookNotifier),
+                    () ->  new FacebookMarketplaceCarRunnable(
+                            seleniumDriverFactory.newDriver(),
+                            new VehicleCategoryHandler(webhookNotifier)
+                    )
             );
 
             logger.log("Successfully initialized SystemFactory, starting executor");
