@@ -42,8 +42,6 @@ public class FacebookMarketplaceCarRunnable implements Runnable {
                         latestItems.forEach(handler::processItem);
                     });
                 }, RUN_EVERY_MS);
-
-                System.out.println("here 1");
             }
         } catch (Exception e) {
             logger.error("FacebookMarketplaceCarRunnable crashed ", e);
