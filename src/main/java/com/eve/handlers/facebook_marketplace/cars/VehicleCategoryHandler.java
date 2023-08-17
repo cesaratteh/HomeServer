@@ -16,7 +16,7 @@ public class VehicleCategoryHandler implements CategoryHandler {
     private final static Logger LOGGER = Logger.getLogger(VehicleCategoryHandler.class);
 
     private final static String VEHICLE_QUERY_URL =
-            "https://www.facebook.com/marketplace/sanfrancisco/vehicles?sortBy=creation_time_descend";
+            "https://www.facebook.com/marketplace/seattle/vehicles?sortBy=creation_time_descend";
 
     private final Notifier notifier;
 
