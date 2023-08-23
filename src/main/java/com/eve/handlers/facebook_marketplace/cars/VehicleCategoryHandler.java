@@ -10,6 +10,7 @@ import org.openqa.selenium.WebElement;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.IntStream;
 
 public class VehicleCategoryHandler implements CategoryHandler {
 
@@ -30,10 +31,10 @@ public class VehicleCategoryHandler implements CategoryHandler {
             Car car = new Car(carElement);
             LOGGER.log(car.toString());
 
-            if (car.price < 3500 && car.price > 1000) {
+            if (car.isGoodDeal()) {
                 notifier.notify(
-                        car.name + " " + car.price + " " + car.miles,
-                        VehicleCategoryHandler.class.getSimpleName() + " Found a Car Under $3,500",
+                        car.name,
+                        car.price + " " + car.miles,
                         car.url);
             }
         } catch (Exception e) {
@@ -70,6 +71,15 @@ public class VehicleCategoryHandler implements CategoryHandler {
             String url = carElement.findElement(By.tagName("a")).getAttribute("href");
             Matcher matcher = Pattern.compile(MARKETPLACE_ITEM_URL_REGEX).matcher(url);
             this.url = matcher.find() ? matcher.group() : null;
+        }
+
+        boolean isGoodDeal() {
+            if (this.price < 3500 && this.price > 1000) {
+                return IntStream.rangeClosed(2013, 2023)
+                        .anyMatch(year -> this.name.contains(String.valueOf(year)));
+            }
+
+            return false;
         }
 
         @Override
