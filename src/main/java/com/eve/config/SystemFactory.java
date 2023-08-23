@@ -5,8 +5,9 @@ import com.eve.dao.database.SQLiteDB;
 import com.eve.handlers.Executor;
 import com.eve.handlers.biz_buy_sell.BizBuySellRunnable;
 import com.eve.handlers.facebook_marketplace.FacebookMarketplaceCarRunnable;
+import com.eve.handlers.facebook_marketplace.basic.BasicSearchHandler;
 import com.eve.handlers.facebook_marketplace.cars.VehicleCategoryHandler;
-import com.eve.notifier.IFTTTWebhookNotifier;
+import com.eve.notifier.IFTTTDedupingNotifier;
 import com.eve.notifier.Notifier;
 
 import java.util.concurrent.Executors;
@@ -24,8 +25,8 @@ public class SystemFactory {
             Docker.up();
             JsonMapper.init();
 
-            Notifier webhookNotifier =
-                    new IFTTTWebhookNotifier();
+            Notifier dedupingNotifier =
+                    new IFTTTDedupingNotifier();
             SeleniumDriverFactory seleniumDriverFactory =
                     new SeleniumDriverFactory();
 
@@ -44,10 +45,11 @@ public class SystemFactory {
                     () -> new BizBuySellRunnable(
                             seleniumDriverFactory.newDriver(),
                             bizBuySellDao,
-                            webhookNotifier),
+                            dedupingNotifier),
                     () ->  new FacebookMarketplaceCarRunnable(
                             seleniumDriverFactory.newDriver(),
-                            new VehicleCategoryHandler(webhookNotifier)
+                            new VehicleCategoryHandler(dedupingNotifier),
+                            new BasicSearchHandler(dedupingNotifier)
                     )
             );
 
