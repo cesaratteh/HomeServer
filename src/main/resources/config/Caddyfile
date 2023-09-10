@@ -19,3 +19,6 @@ qbittorrent.cesaratteh.com {
         cesar $2a$14$rIWSo8moc12sEK61Fz0COezVYfZjzg1lIerAjIB6qNYelLHuwgfnW
     }
 }
+wiki.cesaratteh.com {
+    reverse_proxy http://wiki:8097
+}
