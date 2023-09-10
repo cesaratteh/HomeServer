@@ -20,5 +20,5 @@ qbittorrent.cesaratteh.com {
     }
 }
 wiki.cesaratteh.com {
-    reverse_proxy http://wiki:8097
+    reverse_proxy http://wiki:3000
 }
