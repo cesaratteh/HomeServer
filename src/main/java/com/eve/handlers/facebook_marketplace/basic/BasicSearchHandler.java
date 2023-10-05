@@ -32,7 +32,6 @@ public class BasicSearchHandler implements CategoryHandler {
             LOGGER.log(item.toString());
 
             if (item.matchesQuery(query)) {
-                LOGGER.log("MATCHED!!!!! cesar");
                 notifier.notify(
                         String.join(" ", query.titleKeywords()),
                         "$" + item.price + " ",

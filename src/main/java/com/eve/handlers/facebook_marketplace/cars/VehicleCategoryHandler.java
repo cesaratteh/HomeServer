@@ -7,6 +7,8 @@ import com.eve.util.PriceUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,6 +20,16 @@ public class VehicleCategoryHandler implements CategoryHandler {
 
     private final static String VEHICLE_QUERY_URL =
             "https://www.facebook.com/marketplace/seattle/vehicles?sortBy=creation_time_descend";
+
+    public List<CarPrice> CarQueries =
+            Arrays.asList(
+//                    new CarPrice(20_000, "2022", "Honda", "accord"),
+//                    new CarPrice(19_000, "2021", "Honda", "accord"),
+//                    new CarPrice(19_000, "2020", "Honda", "accord"),
+//                    new CarPrice(40_000, "2013"),
+//                    new CarPrice(40_000, "2015", "honda")
+            );
+    public record CarPrice(int price, String... titleKeywords) {}
 
     private final Notifier notifier;
 
@@ -74,12 +86,24 @@ public class VehicleCategoryHandler implements CategoryHandler {
         }
 
         boolean isGoodDeal() {
+            return isSub3500() || isGoodModel();
+        }
+
+        private boolean isSub3500() {
             if (this.price < 3500 && this.price > 1000) {
                 return IntStream.rangeClosed(2013, 2023)
                         .anyMatch(year -> this.name.contains(String.valueOf(year)));
             }
 
             return false;
+        }
+
+        private boolean isGoodModel() {
+            return CarQueries.stream().anyMatch(query ->
+                    this.price < query.price() &&
+                            Arrays.stream(query.titleKeywords).allMatch(keyword ->
+                                    this.name.toLowerCase().contains(keyword.toLowerCase()))
+            );
         }
 
         @Override
