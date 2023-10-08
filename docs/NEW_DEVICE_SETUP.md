@@ -13,6 +13,7 @@
             * Set media directories
             * Set directory to the FFmpeg executable (might not be needed)
         * Delete default user, and setup user with password
+        * Setup IPTV - https://github.com/iptv-org/iptv
     * Install qBittorrent - `choco install qbittorrent`
         * Configure to start on startup
         * Configure download folder to `~/Desktop/Environments/HomeServer/media/downloads`
