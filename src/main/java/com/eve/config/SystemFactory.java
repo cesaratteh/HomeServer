@@ -41,16 +41,16 @@ public class SystemFactory {
              * passed to it, are re-used when the thread crashes.
              */
             Executor executor = new Executor(
-                    Executors.newFixedThreadPool(EXECUTOR_THREAD_POOL_SIZE),
-                    () -> new BizBuySellRunnable(
-                            seleniumDriverFactory.newDriver(),
-                            bizBuySellDao,
-                            dedupingNotifier),
-                    () ->  new FacebookMarketplaceCarRunnable(
-                            seleniumDriverFactory.newDriver(),
-                            new VehicleCategoryHandler(dedupingNotifier),
-                            new BasicSearchHandler(dedupingNotifier)
-                    )
+                    Executors.newFixedThreadPool(EXECUTOR_THREAD_POOL_SIZE)//,
+//                    () -> new BizBuySellRunnable(
+//                            seleniumDriverFactory.newDriver(),
+//                            bizBuySellDao,
+//                            dedupingNotifier),
+//                    () ->  new FacebookMarketplaceCarRunnable(
+//                            seleniumDriverFactory.newDriver(),
+//                            new VehicleCategoryHandler(dedupingNotifier),
+//                            new BasicSearchHandler(dedupingNotifier)
+//                    )
             );
 
             logger.log("Successfully initialized SystemFactory, starting executor");
