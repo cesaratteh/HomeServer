@@ -5,7 +5,7 @@ grafana.cesaratteh.com {
     }
 }
 jellyfin.cesaratteh.com {
-    reverse_proxy http://host.docker.internal:8096
+    reverse_proxy http://jellyfin:8096
 }
 prometheus.cesaratteh.com {
     reverse_proxy http://prometheus:9090
@@ -14,7 +14,7 @@ prometheus.cesaratteh.com {
     }
 }
 qbittorrent.cesaratteh.com {
-    reverse_proxy http://host.docker.internal:8095
+    reverse_proxy http://qbittorrent:8095
     basicauth {
         cesar $2a$14$rIWSo8moc12sEK61Fz0COezVYfZjzg1lIerAjIB6qNYelLHuwgfnW
     }

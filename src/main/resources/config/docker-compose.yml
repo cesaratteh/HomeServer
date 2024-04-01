@@ -1,5 +1,35 @@
 version: '3'
 services:
+  jellyfin:
+    image: jellyfin/jellyfin
+    container_name: jellyfin
+    network_mode: 'host'
+    volumes:
+      - ../data/jellyfin_data/config:/config
+      - ../data/jellyfin_data/cache:/cache
+      - type: bind
+        source: ../media
+        target: /media
+    restart: 'unless-stopped'
+    environment:
+      - JELLYFIN_PublishedServerUrl=https://jellyfin.cesaratteh.com
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      - TZ=Pdt/UTC
+      - WEBUI_PORT=8095
+      - TORRENTING_PORT=6881
+    volumes:
+      - ../data/qbittorrent_data/config:/config
+      - ../media/downloads:/downloads
+    ports:
+      - 8095:8095
+      - 6881:6881
+      - 6881:6881/udp
+    restart: unless-stopped
   prometheus:
     image: prom/prometheus:latest
     volumes:
@@ -55,6 +85,8 @@ services:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - ../data/caddy_data:/data
 volumes:
+  jellyfin_data:
+  qbittorrent_data:
   prometheus_data:
   grafana_data:
   db-data:
